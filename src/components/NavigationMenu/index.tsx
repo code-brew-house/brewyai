@@ -52,7 +52,7 @@ export const NavigationMenu = () => {
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
+              <ListItemIcon sx={{ color: "#f9fafb" }}>
                 <StarBorder />
               </ListItemIcon>
               <ListItemText primary="Starred" />
