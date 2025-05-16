@@ -1,4 +1,6 @@
+import { Box, Typography } from "@mui/material";
 import type { SectionProps } from "./types";
+import "./index.css";
 
 export const Section = ({
   title,
@@ -8,13 +10,13 @@ export const Section = ({
 }: SectionProps) => {
   return (
     <section>
-      <div className="flexContainer">
-        <div className="leftContainer">
-          <div>{title}</div>
-          <div>{description}</div>
-        </div>
+      <Box className="flexContainer">
+        <Box className="leftContainer">
+          <Typography className="sectionTitle">{title}</Typography>
+          <Typography className="sectionDescription">{description}</Typography>
+        </Box>
         <div className="rightContainer">{rightContainer}</div>
-      </div>
+      </Box>
       <div>{children}</div>
     </section>
   );
