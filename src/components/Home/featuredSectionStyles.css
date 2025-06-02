@@ -1,0 +1,18 @@
+.featured-section-container {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+  margin: -10px 0 32px 0;
+}
+
+.featured-section-container > * {
+  flex: 1;
+  min-width: 0; /* Prevents flex items from overflowing */
+}
+
+.featured-card-title {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+}

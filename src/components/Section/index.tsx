@@ -9,15 +9,29 @@ export const Section = ({
   children,
 }: SectionProps) => {
   return (
-    <section>
+    <section className="section">
       <Box className="flexContainer">
         <Box className="leftContainer">
-          <Typography className="sectionTitle">{title}</Typography>
-          <Typography className="sectionDescription">{description}</Typography>
+          <Typography
+            sx={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              textAlign: "left",
+            }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            sx={{
+              color: "#374151",
+            }}
+          >
+            {description}
+          </Typography>
         </Box>
         <div className="rightContainer">{rightContainer}</div>
       </Box>
-      <div>{children}</div>
+      <Box className="childrenContainer">{children}</Box>
     </section>
   );
 };

@@ -1,8 +1,11 @@
 .analysisContainer {
-    width: 100%;
-    color: white;
+    padding: 20px;
 }
 
 .audioInputContainer {
-    border-color: white;
+    /* border-color: white; */
+}
+
+.formContainer {
+    width: 60%;
 }

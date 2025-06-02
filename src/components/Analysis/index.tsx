@@ -1,4 +1,12 @@
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormHelperText,
+  OutlinedInput,
+} from "@mui/material";
 import { Section } from "../Section";
 import "./index.css";
 
@@ -14,13 +22,53 @@ export const Analysis = () => {
       rightContainer={<AnalysisRightContainer />}
     >
       <div className="analysisContainer">
-        <form>
-          <TextField
-            id="audioUploadInput"
-            label="Upload your audio recording"
-            size="small"
-            className="audioInputContainer"
-          />
+        <form className="formContainer">
+          <FormControl
+            variant="outlined"
+            sx={{ width: "60%", display: "block" }}
+          >
+            <FormHelperText id="audioUploadInput-helperText">
+              Upload Audio Recording
+            </FormHelperText>
+            <OutlinedInput
+              id="audioUploadInput"
+              size="small"
+              className="audioInputContainer"
+            />
+          </FormControl>
+
+          <FormControl variant="outlined">
+            <FormHelperText id="audioUploadInput-helperText">
+              Questions
+            </FormHelperText>
+            <OutlinedInput
+              id="questionInput"
+              size="small"
+              className="questionInputContainer"
+            />
+          </FormControl>
+
+          <FormGroup
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              flexDirection: "row",
+              marginTop: "8px",
+            }}
+          >
+            <FormControlLabel
+              control={<Checkbox size="small" />}
+              label="Generate Summary"
+            />
+            <FormControlLabel
+              control={<Checkbox size="small" />}
+              label="Generate Transcript"
+            />
+          </FormGroup>
+
+          <Button variant="contained" sx={{ width: "100%" }}>
+            Analyze
+          </Button>
         </form>
       </div>
     </Section>
