@@ -2,6 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import type { LayoutProps } from "./types";
 import { NavigationMenu } from "../NavigationMenu";
 import { Header } from "../Header";
+import { Footer } from "../Footer";
 import "./index.css";
 
 export const Layout = ({ children }: LayoutProps) => {
@@ -37,6 +38,7 @@ export const Layout = ({ children }: LayoutProps) => {
         >
           <Header />
           <div className="layoutChildContainer">{children}</div>
+          <Footer />
         </Grid>
       </Grid>
     </>
