@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
+        {/* Authentication Routes */}
         <Route
           path="/login"
           element={
@@ -37,6 +38,8 @@ function App() {
             </Layout>
           }
         />
+
+        {/* Product Routes */}
         <Route
           path="/analysis"
           element={
@@ -46,7 +49,85 @@ function App() {
           }
         />
         <Route
-          path="*/404"
+          path="/pricing-plans"
+          element={
+            <Layout>
+              <h1>Pricing & Plans</h1>
+            </Layout>
+          }
+        />
+        <Route
+          path="/faq"
+          element={
+            <Layout>
+              <h1>FAQ</h1>
+            </Layout>
+          }
+        />
+
+        {/* Company Routes */}
+        <Route
+          path="/about-us"
+          element={
+            <Layout>
+              <h1>About Us</h1>
+            </Layout>
+          }
+        />
+        <Route
+          path="/terms-of-service"
+          element={
+            <Layout>
+              <h1>Terms of Service</h1>
+            </Layout>
+          }
+        />
+        <Route
+          path="/contact-us"
+          element={
+            <Layout>
+              <h1>Contact Us</h1>
+            </Layout>
+          }
+        />
+
+        {/* Additional Routes */}
+        <Route
+          path="/refund-policy"
+          element={
+            <Layout>
+              <h1>Refund Policy</h1>
+            </Layout>
+          }
+        />
+        <Route
+          path="/terms-conditions"
+          element={
+            <Layout>
+              <h1>Terms & Conditions</h1>
+            </Layout>
+          }
+        />
+        <Route
+          path="/privacy-policy"
+          element={
+            <Layout>
+              <h1>Privacy Policy</h1>
+            </Layout>
+          }
+        />
+        <Route
+          path="/sitemap"
+          element={
+            <Layout>
+              <h1>Sitemap</h1>
+            </Layout>
+          }
+        />
+
+        {/* 404 Route */}
+        <Route
+          path="*"
           element={
             <Layout>
               <h1>404 Not Found</h1>
