@@ -69,4 +69,17 @@ export const appTheme = createTheme({
       dark: amber[900],
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            // backgroundColor: "inherit",
+            // borderColor: "inherit",
+            // boxShadow: "none",
+          },
+        },
+      },
+    },
+  },
 });

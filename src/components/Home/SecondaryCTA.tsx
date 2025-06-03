@@ -1,0 +1,28 @@
+import { Button } from "@mui/material";
+import "./secondaryCTAStyles.css";
+
+export const SecondaryCTA = () => {
+  return (
+    <div className="secondary-cta">
+      <div className="secondary-cta__content">
+        <h2 className="secondary-cta__title">
+          Looking to improve your customer engagement?
+        </h2>
+        <p className="secondary-cta__description">
+          Experience how brewy.ai can help your business drive better decisions
+          and outcomes through data-driven insights
+        </p>
+        <Button
+          variant="contained"
+          className="secondary-cta__button"
+          onClick={() => {
+            // Add demo request handling logic here
+            console.log("Demo requested");
+          }}
+        >
+          Request Demo
+        </Button>
+      </div>
+    </div>
+  );
+};

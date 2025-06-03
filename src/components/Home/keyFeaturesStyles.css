@@ -1,0 +1,63 @@
+.key-features-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 24px;
+  padding: 24px 0;
+  width: 100%;
+}
+
+.key-feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, border 0.2s ease-in-out;
+  height: 100%;
+  background-color: transparent;
+}
+
+.key-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f3e5f5;  /* This is deepPurple[50] */
+  border-color: transparent;
+}
+
+.key-feature-card .MuiIcon-root {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.key-feature-card .MuiTypography-h6 {
+  margin-bottom: 8px;
+}
+
+.key-feature-card .MuiTypography-body1 {
+  color: #666;
+  line-height: 1.5;
+}
+
+@media (max-width: 1200px) {
+  .key-features-container {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .key-features-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .key-features-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(8, 1fr);
+  }
+}
