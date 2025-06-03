@@ -33,6 +33,13 @@
   margin-bottom: 0.5rem;
 }
 
+.footer-logo {
+  width: auto;
+  max-width: 85%;
+  margin-top: 1rem;
+  margin-left: -15px;
+}
+
 .subtitle {
   color: #E5E7EB;
   font-size: 0.9rem;
@@ -51,7 +58,7 @@
 }
 
 .footer-column.no-title ul {
-  margin-top: 2.7rem;  /* Align with other columns' content */
+  margin-top: 1.5rem;  /* Align with other columns' content */
 }
 
 .footer-column ul li {

@@ -12,7 +12,13 @@ export const Footer: React.FC = () => {
         <div className="footer-columns">
           {/* Column 1 - Logo */}
           <div className="footer-column">
-            <div className="logo">brewy.ai</div>
+            <div className="logo">
+              <img
+                src="/src/assets/brewy-ai-text-white.png"
+                alt="Brewy AI"
+                className="footer-logo"
+              />
+            </div>
             <p className="subtitle">A CodeBrewHouse Product</p>
           </div>
 
