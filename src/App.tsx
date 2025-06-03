@@ -14,22 +14,8 @@ function App() {
         <Route path="/" element={<Home />} />
 
         {/* Authentication Routes */}
-        <Route
-          path="/login"
-          element={
-            <Layout>
-              <Login />
-            </Layout>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <Layout>
-              <SignUp />
-            </Layout>
-          }
-        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route
           path="/logout"
           element={
