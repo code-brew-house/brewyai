@@ -1,3 +1,7 @@
 .navigationMenu ul {
     list-style: none;
 }
+
+.layoutSidebar {
+    border-right: 1px solid var(--mui-palette-divider);
+}

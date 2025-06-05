@@ -1,44 +1,21 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import type { LayoutProps } from "./types";
 import { NavigationMenu } from "../NavigationMenu";
 import { Header } from "../Header";
-import { Footer } from "../Footer";
+// import { Footer } from "../Footer";,
 import "./index.css";
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Grid container className="layoutContainer">
-        <Grid
-          size={2}
-          className="layoutSidebar"
-          //   sx={{ backgroundColor: "red" }}
-        >
-          <Typography
-            sx={{
-              fontSize: "28px",
-              margin: "0px",
-              padding: "1rem 2rem",
-              borderBottom: "1px solid #f9fafb",
-              lineHeight: "1.1",
-              fontWeight: "bold",
-              boxSizing: "border-box",
-              height: "70px",
-              placeContent: "center",
-            }}
-          >
-            BrewyAI
-          </Typography>
+        <Grid size={2} className="layoutSidebar">
           <NavigationMenu />
         </Grid>
-        <Grid
-          size={10}
-          className="layoutContent"
-          //   sx={{ backgroundColor: "green" }}
-        >
+        <Grid size={10} className="layoutContent">
           <Header />
           <div className="layoutChildContainer">{children}</div>
-          <Footer />
+          {/* <Footer /> */}
         </Grid>
       </Grid>
     </>

@@ -1,3 +1,7 @@
+.layoutContainer {
+    max-width: 1600px;
+}
+
 .layoutChildContainer {
     padding: 1rem;
 }
