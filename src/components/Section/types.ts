@@ -3,4 +3,5 @@ export type SectionProps = {
   description: string;
   rightContainer?: React.ReactNode;
   children: React.ReactNode;
+  withoutTopMargin?: boolean;
 };

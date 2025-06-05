@@ -1,5 +1,6 @@
 .analysisContainer {
-    padding: 20px;
+    padding: 16px;
+    margin-top: 0;
 }
 
 .audioInputContainer {
@@ -7,5 +8,84 @@
 }
 
 .formContainer {
-    width: 60%;
+    max-width: 600px;
+}
+
+.uploadingContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+    min-height: 40px;
+}
+
+.uploadedFileContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+    min-height: 40px;
+}
+
+.fileInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fileName {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.removeButton:hover {
+    color: #d32f2f;
+}
+
+.questionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.questionInputWrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.questionNumber {
+    min-width: 24px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.questionInput {
+    background-color: #fff;
+}
+
+.removeQuestionButton {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.removeQuestionButton:hover {
+    color: #d32f2f;
+}
+
+.addQuestionButton {
+    align-self: flex-start;
+    margin-top: 4px;
+}
+
+.maxQuestionsNote {
+    margin-top: 4px;
+    color: rgba(0, 0, 0, 0.6);
 }

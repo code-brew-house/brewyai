@@ -7,9 +7,12 @@ export const Section = ({
   description,
   rightContainer,
   children,
+  withoutTopMargin,
 }: SectionProps) => {
   return (
-    <section className="section">
+    <section
+      className={`section ${withoutTopMargin ? "withoutTopMargin" : ""}`}
+    >
       <Box className="flexContainer">
         <Box className="leftContainer">
           <Typography

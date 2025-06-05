@@ -3,6 +3,10 @@
     margin-top: 5rem;
 }
 
+.section.withoutTopMargin {
+    margin-top: 0;
+}
+
 .flexContainer {
     display: flex;
     justify-content: space-between;
