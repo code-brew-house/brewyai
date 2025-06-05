@@ -6,11 +6,35 @@ import {
   Link,
   TextField,
   Typography,
+  Alert,
 } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
+import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate, useLocation } from "react-router";
 
 export const SignUp = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const {
+    signup,
+    state: { loading, error },
+  } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await signup({ email, password, name });
+    if (!error) {
+      const from =
+        (location.state as { from?: Location })?.from?.pathname || "/dashboard";
+      navigate(from, { replace: true });
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -74,6 +98,12 @@ export const SignUp = () => {
               Request your demo now, cancel anytime
             </Typography>
 
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            )}
+
             <Button variant="outlined" fullWidth sx={{ mb: 3 }}>
               Continue with Google
             </Button>
@@ -89,30 +119,60 @@ export const SignUp = () => {
               <Divider sx={{ flex: 1 }} />
             </Box>
 
-            <Typography variant="subtitle1" sx={{ mb: 1 }}>
-              Your Email Address
-            </Typography>
-            <TextField
-              fullWidth
-              type="email"
-              placeholder="Enter your email"
-              sx={{ mb: 3 }}
-            />
+            <form onSubmit={handleSubmit}>
+              <TextField
+                fullWidth
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                sx={{ mb: 3 }}
+                required
+              />
 
-            <Button variant="contained" fullWidth sx={{ mb: 3 }}>
-              Sign Up with Email
-            </Button>
+              <TextField
+                fullWidth
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                sx={{ mb: 3 }}
+                required
+              />
 
-            <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
-              By clicking the button above, you agree to our{" "}
-              <Link href="/terms" underline="hover">
-                Terms & Conditions
-              </Link>{" "}
-              and{" "}
-              <Link href="/privacy" underline="hover">
-                Privacy Policy
-              </Link>
-            </Typography>
+              <TextField
+                fullWidth
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                sx={{ mb: 3 }}
+                required
+              />
+
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{ mb: 3 }}
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Creating Account..." : "Sign Up with Email"}
+              </Button>
+
+              <Typography
+                variant="body2"
+                sx={{ mb: 3, color: "text.secondary" }}
+              >
+                By clicking the button above, you agree to our{" "}
+                <Link href="/terms" underline="hover">
+                  Terms & Conditions
+                </Link>{" "}
+                and{" "}
+                <Link href="/privacy" underline="hover">
+                  Privacy Policy
+                </Link>
+              </Typography>
+            </form>
 
             <Typography variant="body2" align="center">
               Already have an account?{" "}

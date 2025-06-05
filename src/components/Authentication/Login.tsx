@@ -8,11 +8,36 @@ import {
   Link,
   TextField,
   Typography,
+  Alert,
 } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
+import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate, useLocation } from "react-router";
 
 export const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const {
+    login,
+    state: { loading, error },
+  } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await login({ email, password });
+    if (!error) {
+      // Navigate to the return URL if available, otherwise go to dashboard
+      const from =
+        (location.state as { from?: Location })?.from?.pathname || "/dashboard";
+      navigate(from, { replace: true });
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -85,6 +110,12 @@ export const Login = () => {
               Welcome back! Select method to log in.
             </Typography>
 
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            )}
+
             <Button variant="outlined" fullWidth sx={{ mb: 3 }}>
               Continue with Google
             </Button>
@@ -100,44 +131,64 @@ export const Login = () => {
               <Divider sx={{ flex: 1 }} />
             </Box>
 
-            <Typography variant="body1" sx={{ mb: 2 }}>
-              Continue with Email
-            </Typography>
+            <form onSubmit={handleSubmit}>
+              <Typography variant="body1" sx={{ mb: 2 }}>
+                Continue with Email
+              </Typography>
 
-            <TextField
-              fullWidth
-              type="email"
-              placeholder="Email"
-              sx={{ mb: 2 }}
-            />
-
-            <TextField
-              fullWidth
-              type="password"
-              placeholder="Password"
-              sx={{ mb: 2 }}
-            />
-
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                mb: 3,
-              }}
-            >
-              <FormControlLabel
-                control={<Checkbox size="small" />}
-                label="Remember me"
+              <TextField
+                fullWidth
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                sx={{ mb: 2 }}
+                required
               />
-              <Link href="/forgot-password" underline="hover">
-                Forgot Password?
-              </Link>
-            </Box>
 
-            <Button variant="contained" fullWidth sx={{ mb: 3 }}>
-              Log In
-            </Button>
+              <TextField
+                fullWidth
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                sx={{ mb: 2 }}
+                required
+              />
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mb: 3,
+                }}
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      size="small"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                    />
+                  }
+                  label="Remember me"
+                />
+                <Link href="/forgot-password" underline="hover">
+                  Forgot Password?
+                </Link>
+              </Box>
+
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{ mb: 3 }}
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Logging in..." : "Log In"}
+              </Button>
+            </form>
 
             <Typography variant="body2" align="center">
               Don't have an account?{" "}

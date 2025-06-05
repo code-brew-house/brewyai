@@ -14,7 +14,10 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import PeopleIcon from "@mui/icons-material/People";
 import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import SettingsIcon from "@mui/icons-material/Settings";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 import brewyLogo from "../../assets/brewy-ai-text-logo.png";
+import { useNavigate, useLocation } from "react-router";
+import { deepPurple } from "@mui/material/colors";
 
 const NavigationContainer = styled(Box)(({ theme }) => ({
   height: "100vh",
@@ -47,6 +50,9 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
         ? "rgba(103, 58, 183, 0.08)"
         : "rgba(145, 85, 253, 0.1)",
   },
+  "&.active": {
+    backgroundColor: deepPurple[50],
+  },
 }));
 
 const StyledListItemText = styled(ListItemText)({
@@ -59,14 +65,47 @@ const StyledListItemText = styled(ListItemText)({
 
 export const NavigationMenu = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const menuItems = [
-    { id: "dashboard", icon: <DashboardIcon />, text: "Dashboard" },
-    { id: "campaigns", icon: <CampaignIcon />, text: "Campaigns" },
-    { id: "scripts", icon: <DescriptionIcon />, text: "Scripts" },
-    { id: "subscribers", icon: <PeopleIcon />, text: "Subscribers" },
-    { id: "calls", icon: <PhoneInTalkIcon />, text: "Calls" },
-    { id: "settings", icon: <SettingsIcon />, text: "Settings" },
+    {
+      id: "dashboard",
+      icon: <DashboardIcon />,
+      text: "Dashboard",
+      path: "/dashboard",
+    },
+    {
+      id: "analysis",
+      icon: <AnalyticsIcon />,
+      text: "Analysis",
+      path: "/analysis",
+    },
+    {
+      id: "campaigns",
+      icon: <CampaignIcon />,
+      text: "Campaigns",
+      path: "/campaigns",
+    },
+    {
+      id: "reports",
+      icon: <DescriptionIcon />,
+      text: "Reports",
+      path: "/reports",
+    },
+    {
+      id: "subscribers",
+      icon: <PeopleIcon />,
+      text: "Subscribers",
+      path: "/subscribers",
+    },
+    { id: "calls", icon: <PhoneInTalkIcon />, text: "Calls", path: "/calls" },
+    {
+      id: "settings",
+      icon: <SettingsIcon />,
+      text: "Settings",
+      path: "/settings",
+    },
   ];
 
   return (
@@ -80,11 +119,20 @@ export const NavigationMenu = () => {
     >
       <NavigationContainer className="layoutSidebar">
         <LogoContainer>
-          <img src={brewyLogo} alt="brewy.ai" />
+          <img
+            src={brewyLogo}
+            alt="brewy.ai"
+            onClick={() => navigate("/")}
+            style={{ cursor: "pointer" }}
+          />
         </LogoContainer>
         <List sx={{ width: "100%", fontSize: "16px", p: 2 }} component="nav">
           {menuItems.map((item) => (
-            <StyledListItemButton key={item.id}>
+            <StyledListItemButton
+              key={item.id}
+              onClick={() => navigate(item.path)}
+              className={location.pathname === item.path ? "active" : ""}
+            >
               <ListItemIcon
                 sx={{ color: theme.palette.primary.main, minWidth: 40 }}
               >

@@ -1,7 +1,10 @@
 import { Button } from "@mui/material";
 import "./homeHeaderStyles.css";
+import { useNavigate } from "react-router";
 
 export const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <header>
       <div className="header-container">
@@ -15,10 +18,18 @@ export const Header = () => {
           </a>
         </div>
         <div className="home-buttons-container">
-          <Button variant="outlined" className="demo-button">
+          <Button
+            variant="outlined"
+            className="demo-button"
+            onClick={() => navigate("/analysis")}
+          >
             Request a Demo
           </Button>
-          <Button variant="contained" className="login-button">
+          <Button
+            variant="contained"
+            className="login-button"
+            onClick={() => navigate("/login")}
+          >
             Login
           </Button>
         </div>

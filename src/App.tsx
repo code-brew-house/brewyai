@@ -6,6 +6,13 @@ import { SignUp } from "./components/Authentication/SignUp";
 import { Logout } from "./components/Authentication/Logout";
 import { Analysis } from "./components/Analysis";
 import { Home } from "./components/Home";
+import { PrivateRoute } from "./components/Authentication/PrivateRoute";
+import { RequireAuth } from "./components/Authentication/RequireAuth";
+
+// Placeholder components for new routes
+const Campaigns = () => <h1>Campaigns</h1>;
+const Reports = () => <h1>Reports</h1>;
+const Dashboard = () => <h1>Dashboard</h1>;
 
 function App() {
   return (
@@ -14,26 +21,78 @@ function App() {
         <Route path="/" element={<Home />} />
 
         {/* Authentication Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<PrivateRoute element={<Login />} />} />
+        <Route path="/signup" element={<PrivateRoute element={<SignUp />} />} />
         <Route
           path="/logout"
           element={
-            <Layout>
-              <Logout />
-            </Layout>
+            <RequireAuth
+              element={
+                <Layout>
+                  <Logout />
+                </Layout>
+              }
+            />
           }
         />
 
         {/* Product Routes */}
         <Route
+          path="/dashboard"
+          element={
+            <RequireAuth
+              element={
+                <Layout>
+                  <Dashboard />
+                </Layout>
+              }
+            />
+          }
+        />
+        <Route
           path="/analysis"
+          // element={
+          //   <RequireAuth
+          //     element={
+          //       <Layout>
+          //         <Analysis />
+          //       </Layout>
+          //     }
+          //   />
+          // }
+          //TODO: remove this once we have a proper auth system
           element={
             <Layout>
               <Analysis />
             </Layout>
           }
         />
+        <Route
+          path="/campaigns"
+          element={
+            <RequireAuth
+              element={
+                <Layout>
+                  <Campaigns />
+                </Layout>
+              }
+            />
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <RequireAuth
+              element={
+                <Layout>
+                  <Reports />
+                </Layout>
+              }
+            />
+          }
+        />
+
+        {/* Public Routes */}
         <Route
           path="/pricing-plans"
           element={
@@ -50,8 +109,6 @@ function App() {
             </Layout>
           }
         />
-
-        {/* Company Routes */}
         <Route
           path="/about-us"
           element={
@@ -76,8 +133,6 @@ function App() {
             </Layout>
           }
         />
-
-        {/* Additional Routes */}
         <Route
           path="/refund-policy"
           element={
