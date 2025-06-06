@@ -8,10 +8,10 @@ import { Analysis } from "./components/Analysis";
 import { Home } from "./components/Home";
 import { PrivateRoute } from "./components/Authentication/PrivateRoute";
 import { RequireAuth } from "./components/Authentication/RequireAuth";
+import { Reports } from "./components/Reports";
 
 // Placeholder components for new routes
 const Campaigns = () => <h1>Campaigns</h1>;
-const Reports = () => <h1>Reports</h1>;
 const Dashboard = () => <h1>Dashboard</h1>;
 
 function App() {
@@ -81,14 +81,19 @@ function App() {
         />
         <Route
           path="/reports"
+          // element={
+          //   <RequireAuth
+          //     element={
+          //       <Layout>
+          //         <Reports />
+          //       </Layout>
+          //     }
+          //   />
+          // }
           element={
-            <RequireAuth
-              element={
-                <Layout>
-                  <Reports />
-                </Layout>
-              }
-            />
+            <Layout>
+              <Reports />
+            </Layout>
           }
         />
 
