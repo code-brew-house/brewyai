@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import "./homeHeaderStyles.css";
 import { useNavigate } from "react-router";
+import brewyAiLogo from "/src/assets/brewy-ai-text-logo.png";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -10,11 +11,7 @@ export const Header = () => {
       <div className="header-container">
         <div className="logo-container">
           <a href="/">
-            <img
-              src="/src/assets/brewy-ai-text-logo.png"
-              alt="Brewy AI Logo"
-              className="logo"
-            />
+            <img src={brewyAiLogo} alt="Brewy AI Logo" className="logo" />
           </a>
         </div>
         <div className="home-buttons-container">
