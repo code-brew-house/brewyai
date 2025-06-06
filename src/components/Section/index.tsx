@@ -21,7 +21,7 @@ export const Section = ({
           width={rightContainer ? "50%" : "100%"}
           sx={{
             display: "grid",
-            placeItems: centerAlignText ? "center" : "left",
+            placeItems: !rightContainer && centerAlignText ? "center" : "left",
           }}
         >
           {tag && (
@@ -32,6 +32,8 @@ export const Section = ({
                 fontWeight: "500",
                 textTransform: "uppercase",
                 marginBottom: "10px",
+                marginLeft: !rightContainer && centerAlignText ? "auto" : "0",
+                marginRight: !rightContainer && centerAlignText ? "auto" : "0",
               }}
               label={tag}
             />
@@ -40,9 +42,9 @@ export const Section = ({
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              textAlign: centerAlignText ? "center" : "left",
-              maxWidth: "50%",
-              margin: "auto",
+              textAlign: !rightContainer && centerAlignText ? "center" : "left",
+              maxWidth: !rightContainer && centerAlignText ? "100%" : "50%",
+              margin: !rightContainer && centerAlignText ? "auto" : "0",
             }}
           >
             {title}
@@ -50,9 +52,9 @@ export const Section = ({
           <Typography
             sx={{
               color: "#374151",
-              textAlign: centerAlignText ? "center" : "left",
-              maxWidth: "65%",
-              margin: "auto",
+              textAlign: !rightContainer && centerAlignText ? "center" : "left",
+              maxWidth: !rightContainer && centerAlignText ? "80%" : "65%",
+              margin: !rightContainer && centerAlignText ? "auto" : "0",
               marginTop: "0.8rem",
             }}
           >

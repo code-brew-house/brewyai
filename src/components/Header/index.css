@@ -1,11 +1,26 @@
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 1rem 2rem;
     border-bottom: 1px solid #f9fafb;
     box-sizing: border-box;
     height: 70px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    background-color: #673ab7 !important;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
 }
 
 .header h1 {
