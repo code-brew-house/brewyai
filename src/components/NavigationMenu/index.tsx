@@ -112,7 +112,7 @@ export const NavigationMenu = () => {
     <Box
       sx={{
         display: "flex",
-        maxWidth: "1600px",
+        maxWidth: "1440px",
         margin: "0 auto",
         minHeight: "100vh",
       }}

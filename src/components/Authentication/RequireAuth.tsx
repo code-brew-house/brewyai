@@ -1,6 +1,6 @@
 import { type ReactElement } from "react";
 import { Navigate, useLocation } from "react-router";
-import { useAuth } from "../../contexts/AuthContext";
+import useAuth from "../../contexts/auth/useAuth";
 import { Box, CircularProgress } from "@mui/material";
 
 interface RequireAuthProps {

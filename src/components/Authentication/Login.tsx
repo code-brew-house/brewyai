@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
-import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate, useLocation } from "react-router";
+import { useState, useEffect } from "react";
+import useAuth from "../../contexts/auth/useAuth";
+// import { useNavigate, useLocation } from "react-router";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,21 +22,33 @@ export const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const {
     login,
+    clearError,
     state: { loading, error },
   } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
+
+  // Clear error when unmounting
+  useEffect(() => {
+    return () => {
+      clearError();
+    };
+  }, [clearError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login({ email, password });
-    if (!error) {
-      // Navigate to the return URL if available, otherwise go to dashboard
-      const from =
-        (location.state as { from?: Location })?.from?.pathname || "/dashboard";
-      navigate(from, { replace: true });
-    }
+    const response = await login({ email, password });
+    console.log(response);
   };
+
+  // Handle navigation after successful login
+  // useEffect(() => {
+  //   if (!loading && !error && email && password) {
+  //     const from =
+  //       (location.state as { from?: Location })?.from?.pathname || "/dashboard";
+  //     navigate(from, { replace: true });
+  //   }
+  // }, [loading, error, navigate, location.state, email, password]);
 
   return (
     <Box
@@ -58,16 +70,7 @@ export const Login = () => {
           overflow: "hidden",
         }}
       >
-        {/* Left Section - Purple Background */}
-        <Box
-          sx={{
-            width: "50%",
-            height: "100%",
-            bgcolor: deepPurple[500],
-          }}
-        />
-
-        {/* Right Section - Form */}
+        {/* Left Section */}
         <Box
           sx={{
             width: "50%",
@@ -91,23 +94,15 @@ export const Login = () => {
 
             <Typography
               variant="h6"
-              sx={{
-                mb: 1,
-                fontWeight: "bold",
-                textAlign: "center",
-              }}
+              sx={{ mb: 1, fontWeight: "bold", textAlign: "center" }}
             >
-              Log in to your account
+              Welcome back
             </Typography>
             <Typography
               variant="body1"
-              sx={{
-                mb: 2,
-                textAlign: "center",
-                color: "text.secondary",
-              }}
+              sx={{ mb: 2, textAlign: "center", color: "text.secondary" }}
             >
-              Welcome back! Select method to log in.
+              Log in to your account
             </Typography>
 
             {error && (
@@ -132,10 +127,6 @@ export const Login = () => {
             </Box>
 
             <form onSubmit={handleSubmit}>
-              <Typography variant="body1" sx={{ mb: 2 }}>
-                Continue with Email
-              </Typography>
-
               <TextField
                 fullWidth
                 type="email"
@@ -198,6 +189,15 @@ export const Login = () => {
             </Typography>
           </Container>
         </Box>
+
+        {/* Right Section */}
+        <Box
+          sx={{
+            width: "50%",
+            height: "100%",
+            bgcolor: deepPurple[500],
+          }}
+        />
       </Box>
     </Box>
   );
