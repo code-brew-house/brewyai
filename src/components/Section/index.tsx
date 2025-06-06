@@ -21,7 +21,7 @@ export const Section = ({
           width={rightContainer ? "50%" : "100%"}
           sx={{
             display: "grid",
-            placeItems: centerAlignText ? "center" : "inherit",
+            placeItems: centerAlignText ? "center" : "left",
           }}
         >
           {tag && (
