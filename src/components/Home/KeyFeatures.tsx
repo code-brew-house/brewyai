@@ -75,7 +75,11 @@ const KeyFeatureCard = ({
 
 export const KeyFeatures = () => {
   return (
-    <Section title="Key Features" description="Brewy.ai's key features">
+    <Section
+      title="Revolutionizing Business with AI Technology"
+      description="How brewy.ai can help you optimize processes, improve decision-making and foster innovation, enabling you to stay ahead in a rapidly changing business landscape."
+      centerAlignText
+    >
       <Box className="key-features-container">
         {keyFeaturesData.map((item) => (
           <KeyFeatureCard {...item} />

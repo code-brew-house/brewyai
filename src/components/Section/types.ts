@@ -4,4 +4,5 @@ export type SectionProps = {
   rightContainer?: React.ReactNode;
   children: React.ReactNode;
   withoutTopMargin?: boolean;
+  centerAlignText?: boolean;
 };

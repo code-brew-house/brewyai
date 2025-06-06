@@ -45,6 +45,7 @@ export const FeaturedSection = () => {
       <Section
         title="Transform Your Audio into Actionable Intelligence."
         description="Tired of sifting through hours of recordings? Wish you could instantly find key information buried in your audio files? Brewy.ai is here to help."
+        centerAlignText
       >
         <Box className="featured-section-container">
           {cardData.map((item) => (

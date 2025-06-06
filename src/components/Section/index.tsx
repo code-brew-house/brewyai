@@ -8,18 +8,21 @@ export const Section = ({
   rightContainer,
   children,
   withoutTopMargin,
+  centerAlignText,
 }: SectionProps) => {
   return (
     <section
       className={`section ${withoutTopMargin ? "withoutTopMargin" : ""}`}
     >
       <Box className="flexContainer">
-        <Box className="leftContainer">
+        <Box className="leftContainer" width={rightContainer ? "50%" : "100%"}>
           <Typography
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              textAlign: "left",
+              textAlign: centerAlignText ? "center" : "left",
+              maxWidth: "50%",
+              margin: "auto",
             }}
           >
             {title}
@@ -27,6 +30,10 @@ export const Section = ({
           <Typography
             sx={{
               color: "#374151",
+              textAlign: centerAlignText ? "center" : "left",
+              maxWidth: "65%",
+              margin: "auto",
+              marginTop: "0.8rem",
             }}
           >
             {description}
