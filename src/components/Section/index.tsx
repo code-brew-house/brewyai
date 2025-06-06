@@ -1,8 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Chip, colors, Typography } from "@mui/material";
 import type { SectionProps } from "./types";
 import "./index.css";
 
 export const Section = ({
+  tag,
   title,
   description,
   rightContainer,
@@ -15,7 +16,26 @@ export const Section = ({
       className={`section ${withoutTopMargin ? "withoutTopMargin" : ""}`}
     >
       <Box className="flexContainer">
-        <Box className="leftContainer" width={rightContainer ? "50%" : "100%"}>
+        <Box
+          className="leftContainer"
+          width={rightContainer ? "50%" : "100%"}
+          sx={{
+            display: "grid",
+            placeItems: centerAlignText ? "center" : "inherit",
+          }}
+        >
+          {tag && (
+            <Chip
+              sx={{
+                width: "fit-content",
+                backgroundColor: colors.deepPurple[100],
+                fontWeight: "500",
+                textTransform: "uppercase",
+                marginBottom: "10px",
+              }}
+              label={tag}
+            />
+          )}
           <Typography
             sx={{
               fontSize: "24px",

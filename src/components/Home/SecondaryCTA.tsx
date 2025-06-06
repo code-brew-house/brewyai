@@ -1,10 +1,19 @@
-import { Button } from "@mui/material";
+import { Button, Chip, colors } from "@mui/material";
 import "./secondaryCTAStyles.css";
 
 export const SecondaryCTA = () => {
   return (
     <div className="secondary-cta">
       <div className="secondary-cta__content">
+        <Chip
+          label="How We Can Help You"
+          sx={{
+            backgroundColor: colors.deepPurple[100],
+            fontWeight: 500,
+            textTransform: "uppercase",
+            marginBottom: "-30px",
+          }}
+        />
         <h2 className="secondary-cta__title">
           Looking to improve your customer engagement?
         </h2>

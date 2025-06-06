@@ -79,6 +79,7 @@ export const KeyFeatures = () => {
       title="Revolutionizing Business with AI Technology"
       description="How brewy.ai can help you optimize processes, improve decision-making and foster innovation, enabling you to stay ahead in a rapidly changing business landscape."
       centerAlignText
+      tag="Features"
     >
       <Box className="key-features-container">
         {keyFeaturesData.map((item) => (
