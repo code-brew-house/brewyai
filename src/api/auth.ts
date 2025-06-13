@@ -3,6 +3,22 @@ import axios from "axios";
 // Get the API URL from environment variables
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8082/api";
 
+interface Authority {
+  authority: string;
+}
+
+interface User {
+  id: number;
+  username: string;
+  password: string;
+  email: string;
+  enabled: boolean;
+  credentialsNonExpired: boolean;
+  accountNonExpired: boolean;
+  accountNonLocked: boolean;
+  authorities: Authority[];
+}
+
 // Types for our requests and responses
 interface SignupData {
   email: string;
@@ -11,17 +27,13 @@ interface SignupData {
 }
 
 interface LoginData {
-  email: string;
+  username: string;
   password: string;
 }
 
 interface AuthResponse {
   token: string;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-  };
+  expiresIn: number;
 }
 
 // Create an axios instance with default config
@@ -46,6 +58,22 @@ authApi.interceptors.request.use((config) => {
   return config;
 });
 
+// Get current user data
+export const getCurrentUser = async (token: string): Promise<User> => {
+  try {
+    const response = await authApi.post<User>("/users/me", { token });
+    console.log({ res: response.data });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Failed to fetch user data"
+      );
+    }
+    throw error;
+  }
+};
+
 // Signup API wrapper
 export const signup = async (data: SignupData): Promise<AuthResponse> => {
   try {
@@ -63,11 +91,13 @@ export const signup = async (data: SignupData): Promise<AuthResponse> => {
 // Login API wrapper
 export const login = async (data: LoginData): Promise<AuthResponse> => {
   try {
+    console.log("Making login API request with:", { username: data.username });
     const response = await authApi.post<AuthResponse>("/auth/login", data);
-    console.log(response);
+    console.log("Raw API response:", response.data);
     localStorage.setItem("token", response.data.token);
     return response.data;
   } catch (error) {
+    console.error("Login API error:", error);
     if (axios.isAxiosError(error)) {
       throw new Error(error.response?.data?.message || "Login failed");
     }

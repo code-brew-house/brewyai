@@ -6,7 +6,7 @@ import { SignUp } from "./components/Authentication/SignUp";
 import { Logout } from "./components/Authentication/Logout";
 import { Analysis } from "./components/Analysis";
 import { Home } from "./components/Home";
-import { PrivateRoute } from "./components/Authentication/PrivateRoute";
+// import { PrivateRoute } from "./components/Authentication/PrivateRoute";
 import { RequireAuth } from "./components/Authentication/RequireAuth";
 import { Reports } from "./components/Reports";
 
@@ -21,8 +21,8 @@ function App() {
         <Route path="/" element={<Home />} />
 
         {/* Authentication Routes */}
-        <Route path="/login" element={<PrivateRoute element={<Login />} />} />
-        <Route path="/signup" element={<PrivateRoute element={<SignUp />} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route
           path="/logout"
           element={

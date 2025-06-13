@@ -14,19 +14,18 @@ import { deepPurple } from "@mui/material/colors";
 import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
 import { useState, useEffect } from "react";
 import useAuth from "../../contexts/auth/useAuth";
-// import { useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const {
     login,
     clearError,
-    state: { loading, error },
+    state: { loading, error, user },
   } = useAuth();
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const navigate = useNavigate();
 
   // Clear error when unmounting
   useEffect(() => {
@@ -37,18 +36,28 @@ export const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await login({ email, password });
-    console.log(response);
+    console.log("Attempting login with:", { username });
+    try {
+      await login({ username, password });
+      console.log("Login API call completed");
+    } catch (err) {
+      console.error("Login error:", err);
+    }
   };
 
   // Handle navigation after successful login
-  // useEffect(() => {
-  //   if (!loading && !error && email && password) {
-  //     const from =
-  //       (location.state as { from?: Location })?.from?.pathname || "/dashboard";
-  //     navigate(from, { replace: true });
-  //   }
-  // }, [loading, error, navigate, location.state, email, password]);
+  useEffect(() => {
+    console.log("Auth state changed:", { loading, error: !!error, user });
+    if (!loading && !error && !!user) {
+      console.log("Navigation conditions met:", {
+        loading: !loading,
+        noError: !error,
+        hasUser: !!user,
+        userData: user,
+      });
+      navigate("/analysis", { replace: true });
+    }
+  }, [loading, error, user, navigate]);
 
   return (
     <Box
@@ -129,10 +138,10 @@ export const Login = () => {
             <form onSubmit={handleSubmit}>
               <TextField
                 fullWidth
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 sx={{ mb: 2 }}
                 required
               />

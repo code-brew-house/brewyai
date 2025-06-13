@@ -1,4 +1,4 @@
-import { useReducer, useCallback, useEffect } from "react";
+import { useReducer, useCallback } from "react";
 import type { ReactNode } from "react";
 import type {
   AuthState,
@@ -9,9 +9,8 @@ import type {
 import {
   login as loginApi,
   signup as signupApi,
-  logout as logoutApi,
+  getCurrentUser,
 } from "../../api/auth";
-import axios from "axios";
 import { AuthContext } from "./AuthContext";
 
 // Initial state
@@ -30,8 +29,13 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         loading: true,
         error: null,
       };
-    case "LOGIN_SUCCESS":
-    case "SIGNUP_SUCCESS":
+    case "AUTH_TOKEN_RECEIVED":
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case "USER_LOADED":
       return {
         ...state,
         user: action.payload,
@@ -65,59 +69,51 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Check for stored token on mount
-  useEffect(() => {
-    const initializeAuth = async () => {
-      const token = localStorage.getItem("token");
-
-      if (token) {
-        try {
-          const response = await axios.get("/api/me", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.status === 200) {
-            dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
-          } else {
-            localStorage.removeItem("token");
-            dispatch({ type: "LOGOUT" });
-          }
-        } catch (error) {
-          console.error("Error restoring session:", error);
-          localStorage.removeItem("token");
-          dispatch({ type: "LOGOUT" });
-        }
-      } else {
-        dispatch({ type: "LOGOUT" });
-      }
-    };
-
-    initializeAuth();
-  }, []);
-
-  const login = useCallback(async (credentials: LoginCredentials) => {
+  // Function to fetch user data
+  const fetchUserData = useCallback(async (token: string) => {
     try {
-      dispatch({ type: "LOGIN_START" });
-      const response = await loginApi(credentials);
-      dispatch({ type: "LOGIN_SUCCESS", payload: response.user });
+      const userData = await getCurrentUser(token);
+      dispatch({ type: "USER_LOADED", payload: userData });
     } catch (error) {
+      console.error("Error fetching user data:", error);
       dispatch({
         type: "LOGIN_ERROR",
-        payload:
-          error instanceof Error
-            ? error.message
-            : "An error occurred during login",
+        payload: "Failed to load user data",
       });
     }
   }, []);
 
+  const login = useCallback(
+    async (credentials: LoginCredentials) => {
+      try {
+        console.log("Starting login process...");
+        dispatch({ type: "LOGIN_START" });
+        const response = await loginApi(credentials);
+        console.log("Login API response:", response);
+
+        // After receiving the token, fetch user data
+        dispatch({ type: "AUTH_TOKEN_RECEIVED" });
+        await fetchUserData(response.token);
+      } catch (error) {
+        console.error("Login error:", error);
+        dispatch({
+          type: "LOGIN_ERROR",
+          payload:
+            error instanceof Error
+              ? error.message
+              : "An error occurred during login",
+        });
+      }
+    },
+    [fetchUserData]
+  );
+
   const signup = useCallback(async (credentials: SignUpCredentials) => {
     try {
       dispatch({ type: "SIGNUP_START" });
-      const response = await signupApi(credentials);
-      dispatch({ type: "SIGNUP_SUCCESS", payload: response.user });
+      await signupApi(credentials);
+      // Don't fetch user data after signup since we don't get a token
+      dispatch({ type: "LOGOUT" });
     } catch (error) {
       dispatch({
         type: "SIGNUP_ERROR",
@@ -130,15 +126,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const logout = useCallback(async () => {
-    try {
-      await logoutApi();
-      dispatch({ type: "LOGOUT" });
-    } catch (error) {
-      console.error("Error during logout:", error);
-      // Still clear local state even if the API call fails
-      localStorage.removeItem("token");
-      dispatch({ type: "LOGOUT" });
-    }
+    localStorage.removeItem("token");
+    dispatch({ type: "LOGOUT" });
   }, []);
 
   const clearError = useCallback(() => {

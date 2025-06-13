@@ -1,7 +1,17 @@
+interface Authority {
+  authority: string;
+}
+
 export interface User {
-  id: string;
+  id: number;
+  username: string;
+  password: string;
   email: string;
-  name?: string;
+  enabled: boolean;
+  credentialsNonExpired: boolean;
+  accountNonExpired: boolean;
+  accountNonLocked: boolean;
+  authorities: Authority[];
 }
 
 export interface AuthState {
@@ -12,19 +22,22 @@ export interface AuthState {
 
 export type AuthAction =
   | { type: "LOGIN_START" }
-  | { type: "LOGIN_SUCCESS"; payload: User }
+  | { type: "AUTH_TOKEN_RECEIVED" }
+  | { type: "USER_LOADED"; payload: User }
   | { type: "LOGIN_ERROR"; payload: string }
   | { type: "SIGNUP_START" }
-  | { type: "SIGNUP_SUCCESS"; payload: User }
   | { type: "SIGNUP_ERROR"; payload: string }
   | { type: "LOGOUT" }
   | { type: "CLEAR_ERROR" };
 
 export interface LoginCredentials {
-  email: string;
+  username: string;
   password: string;
 }
 
-export interface SignUpCredentials extends LoginCredentials {
+export interface SignUpCredentials {
+  email: string;
+  username: string;
+  password: string;
   name: string;
 }
