@@ -1,13 +1,13 @@
 import {
   Button,
-  Checkbox,
+  // Checkbox,
   FormControl,
-  FormControlLabel,
-  FormGroup,
+  // FormControlLabel,
+  // FormGroup,
   OutlinedInput,
   CircularProgress,
   IconButton,
-  Typography,
+  // Typography,
   InputLabel,
 } from "@mui/material";
 import { Section } from "../Section";
@@ -16,10 +16,14 @@ import { useState, useRef } from "react";
 import type { ChangeEvent } from "react";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
+import { analyzeAudio } from "../../api/analysis";
+import useAuth from "../../contexts/auth/useAuth";
 
 interface AudioFile {
   name: string;
   size: number;
+  file: File;
+  url: string;
 }
 
 const AudioUpload = ({
@@ -42,12 +46,14 @@ const AudioUpload = ({
 
     setIsUploading(true);
     try {
-      // Simulate upload delay - replace this with actual upload logic
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Create object URL for audio playback
+      const url = URL.createObjectURL(file);
 
       const audioFile = {
         name: file.name,
         size: file.size,
+        file,
+        url,
       };
       setUploadedFile(audioFile);
       onFileChange(audioFile);
@@ -61,6 +67,9 @@ const AudioUpload = ({
   };
 
   const handleRemoveFile = () => {
+    if (uploadedFile?.url) {
+      URL.revokeObjectURL(uploadedFile.url);
+    }
     setUploadedFile(null);
     onFileChange(null);
     if (fileInputRef.current) {
@@ -83,19 +92,26 @@ const AudioUpload = ({
 
   if (uploadedFile) {
     return (
-      <div className="uploadedFileContainer">
-        <div className="fileInfo">
-          <AttachFileIcon />
-          <span className="fileName">{uploadedFile.name}</span>
-        </div>
-        <IconButton
+      <>
+        <OutlinedInput
+          id="audioUploadInput"
           size="small"
-          onClick={handleRemoveFile}
-          className="removeButton"
-        >
-          <CloseIcon />
-        </IconButton>
-      </div>
+          className="audioInputContainer"
+          fullWidth
+          value={uploadedFile.name}
+          readOnly
+          endAdornment={
+            <IconButton size="small" onClick={handleRemoveFile}>
+              <CloseIcon />
+            </IconButton>
+          }
+        />
+        <audio
+          controls
+          src={uploadedFile.url}
+          style={{ width: "100%", marginTop: "8px" }}
+        />
+      </>
     );
   }
 
@@ -126,108 +142,118 @@ const AudioUpload = ({
   );
 };
 
-const QuestionInput = ({
-  onQuestionsChange,
-}: {
-  onQuestionsChange: (questions: string[]) => void;
-}) => {
-  const [questions, setQuestions] = useState<string[]>([""]);
-  const [showAddButton, setShowAddButton] = useState(false);
+// const QuestionInput = ({
+//   onQuestionsChange,
+// }: {
+//   onQuestionsChange: (questions: string[]) => void;
+// }) => {
+//   const [questions, setQuestions] = useState<string[]>([""]);
+//   const [showAddButton, setShowAddButton] = useState(false);
 
-  const handleQuestionChange = (index: number, value: string) => {
-    const newQuestions = [...questions];
-    newQuestions[index] = value;
-    setQuestions(newQuestions);
-    onQuestionsChange(newQuestions);
+//   const handleQuestionChange = (index: number, value: string) => {
+//     const newQuestions = [...questions];
+//     newQuestions[index] = value;
+//     setQuestions(newQuestions);
+//     onQuestionsChange(newQuestions);
 
-    // Show/hide add button based on if any question has content
-    setShowAddButton(newQuestions.some((q) => q.trim() !== ""));
-  };
+//     // Show/hide add button based on if any question has content
+//     setShowAddButton(newQuestions.some((q) => q.trim() !== ""));
+//   };
 
-  const addQuestion = () => {
-    if (questions.length < 8) {
-      const newQuestions = [...questions, ""];
-      setQuestions(newQuestions);
-      onQuestionsChange(newQuestions);
-    }
-  };
+//   const addQuestion = () => {
+//     if (questions.length < 8) {
+//       const newQuestions = [...questions, ""];
+//       setQuestions(newQuestions);
+//       onQuestionsChange(newQuestions);
+//     }
+//   };
 
-  const removeQuestion = (index: number) => {
-    const newQuestions = questions.filter((_, i) => i !== index);
-    setQuestions(newQuestions);
-    onQuestionsChange(newQuestions);
-    if (newQuestions.every((q) => q.trim() === "")) {
-      setShowAddButton(false);
-    }
-  };
+//   const removeQuestion = (index: number) => {
+//     const newQuestions = questions.filter((_, i) => i !== index);
+//     setQuestions(newQuestions);
+//     onQuestionsChange(newQuestions);
+//     if (newQuestions.every((q) => q.trim() === "")) {
+//       setShowAddButton(false);
+//     }
+//   };
 
-  return (
-    <div className="questionsContainer">
-      {questions.map((question, index) => (
-        <div key={index} className="questionInputWrapper">
-          <Typography variant="body2" className="questionNumber">
-            {index + 1}
-          </Typography>
-          <FormControl variant="outlined" fullWidth>
-            <OutlinedInput
-              size="small"
-              value={question}
-              onChange={(e) => handleQuestionChange(index, e.target.value)}
-              placeholder={`Question ${index + 1}`}
-              className="questionInput"
-            />
-          </FormControl>
-          {index > 0 && (
-            <IconButton
-              size="small"
-              onClick={() => removeQuestion(index)}
-              className="removeQuestionButton"
-            >
-              <CloseIcon />
-            </IconButton>
-          )}
-        </div>
-      ))}
-      {showAddButton && questions.length < 8 && (
-        <Button
-          variant="text"
-          onClick={addQuestion}
-          className="addQuestionButton"
-          size="small"
-        >
-          Add Question
-        </Button>
-      )}
-      {questions.length >= 8 && (
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          className="maxQuestionsNote"
-        >
-          Maximum number of questions reached (8)
-        </Typography>
-      )}
-    </div>
-  );
-};
+//   return (
+//     <div className="questionsContainer">
+//       {questions.map((question, index) => (
+//         <div key={index} className="questionInputWrapper">
+//           <Typography variant="body2" className="questionNumber">
+//             {index + 1}
+//           </Typography>
+//           <FormControl variant="outlined" fullWidth>
+//             <OutlinedInput
+//               size="small"
+//               value={question}
+//               onChange={(e) => handleQuestionChange(index, e.target.value)}
+//               placeholder={`Question ${index + 1}`}
+//               className="questionInput"
+//             />
+//           </FormControl>
+//           {index > 0 && (
+//             <IconButton
+//               size="small"
+//               onClick={() => removeQuestion(index)}
+//               className="removeQuestionButton"
+//             >
+//               <CloseIcon />
+//             </IconButton>
+//           )}
+//         </div>
+//       ))}
+//       {showAddButton && questions.length < 8 && (
+//         <Button
+//           variant="text"
+//           onClick={addQuestion}
+//           className="addQuestionButton"
+//           size="small"
+//         >
+//           Add Question
+//         </Button>
+//       )}
+//       {questions.length >= 8 && (
+//         <Typography
+//           variant="caption"
+//           color="text.secondary"
+//           className="maxQuestionsNote"
+//         >
+//           Maximum number of questions reached (8)
+//         </Typography>
+//       )}
+//     </div>
+//   );
+// };
 
 export const Analysis = () => {
   const [audioFile, setAudioFile] = useState<AudioFile | null>(null);
-  const [questions, setQuestions] = useState<string[]>([""]);
-  const [generateSummary, setGenerateSummary] = useState(false);
-  const [generateTranscript, setGenerateTranscript] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const {
+    state: { user },
+  } = useAuth();
 
-  const handleAnalyze = (e: React.FormEvent) => {
+  const handleAnalyze = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!audioFile || !user) return;
 
-    const analysisData = {
-      audioFile,
-      questions: questions.filter((q) => q.trim() !== ""), // Only include non-empty questions
-      generateSummary,
-      generateTranscript,
-    };
-
-    console.log("Analysis Data:", analysisData);
+    setIsAnalyzing(true);
+    try {
+      const response = await analyzeAudio({
+        file: audioFile.file,
+        // clientId: user.id.toString(),
+        clientId: "clientId1",
+        customPrompt: "dominantTone",
+      });
+      console.log("Analysis response:", response);
+      // TODO: Handle the analysis response (e.g., show results, navigate to reports)
+    } catch (error) {
+      console.error("Error analyzing audio:", error);
+      alert("Failed to analyze audio. Please try again.");
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   return (
@@ -258,7 +284,7 @@ export const Analysis = () => {
             <AudioUpload onFileChange={setAudioFile} />
           </FormControl>
 
-          <FormControl
+          {/* <FormControl
             variant="outlined"
             sx={{ width: "100%", display: "block", marginBottom: "16px" }}
           >
@@ -276,9 +302,9 @@ export const Analysis = () => {
               Questions
             </InputLabel>
             <QuestionInput onQuestionsChange={setQuestions} />
-          </FormControl>
+          </FormControl> */}
 
-          <FormGroup
+          {/* <FormGroup
             sx={{
               display: "flex",
               justifyContent: "flex-start",
@@ -306,10 +332,15 @@ export const Analysis = () => {
               }
               label="Generate Transcript"
             />
-          </FormGroup>
+          </FormGroup> */}
 
-          <Button variant="contained" sx={{ width: "100%" }} type="submit">
-            Analyze
+          <Button
+            variant="contained"
+            sx={{ width: "100%" }}
+            type="submit"
+            disabled={!audioFile || isAnalyzing}
+          >
+            {isAnalyzing ? "Analyzing..." : "Analyze"}
           </Button>
         </form>
       </div>
