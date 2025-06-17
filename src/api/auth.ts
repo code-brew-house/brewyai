@@ -61,8 +61,9 @@ authApi.interceptors.request.use((config) => {
 // Get current user data
 export const getCurrentUser = async (token: string): Promise<User> => {
   try {
-    const response = await authApi.post<User>("/users/me", { token });
-    console.log({ res: response.data });
+    const response = await authApi.get<User>("/users/me", {
+      headers: { token },
+    });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -78,7 +79,6 @@ export const getCurrentUser = async (token: string): Promise<User> => {
 export const signup = async (data: SignupData): Promise<AuthResponse> => {
   try {
     const response = await authApi.post<AuthResponse>("/auth/signup", data);
-    localStorage.setItem("token", response.data.token);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
