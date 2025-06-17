@@ -18,6 +18,7 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const {
     signup,
     clearError,
@@ -35,7 +36,7 @@ export const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signup({ email, password, name });
+    await signup({ email, password, username, name });
   };
 
   return (
@@ -128,6 +129,15 @@ export const SignUp = () => {
                 placeholder="Full Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                sx={{ mb: 3 }}
+                required
+              />
+
+              <TextField
+                fullWidth
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 sx={{ mb: 3 }}
                 required
               />

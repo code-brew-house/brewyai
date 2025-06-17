@@ -30,8 +30,8 @@ export const Header = () => {
 
   // Get user initials from name or email
   const getInitials = () => {
-    if (user?.name) {
-      return user.name
+    if (user?.username) {
+      return user.username
         .split(" ")
         .map((n) => n[0])
         .join("")
