@@ -9,11 +9,7 @@ import {
 } from "@mui/material";
 import "./index.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import CampaignIcon from "@mui/icons-material/Campaign";
 import DescriptionIcon from "@mui/icons-material/Description";
-import PeopleIcon from "@mui/icons-material/People";
-import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
-import SettingsIcon from "@mui/icons-material/Settings";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 import brewyLogo from "../../assets/brewy-ai-text-logo.png";
 import { useNavigate, useLocation } from "react-router";
@@ -82,29 +78,10 @@ export const NavigationMenu = () => {
       path: "/analysis",
     },
     {
-      id: "campaigns",
-      icon: <CampaignIcon />,
-      text: "Campaigns",
-      path: "/campaigns",
-    },
-    {
       id: "reports",
       icon: <DescriptionIcon />,
       text: "Reports",
       path: "/reports",
-    },
-    {
-      id: "subscribers",
-      icon: <PeopleIcon />,
-      text: "Subscribers",
-      path: "/subscribers",
-    },
-    { id: "calls", icon: <PhoneInTalkIcon />, text: "Calls", path: "/calls" },
-    {
-      id: "settings",
-      icon: <SettingsIcon />,
-      text: "Settings",
-      path: "/settings",
     },
   ];
 

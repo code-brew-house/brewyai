@@ -12,7 +12,7 @@ import { deepPurple } from "@mui/material/colors";
 import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
 import { useState, useEffect } from "react";
 import useAuth from "../../contexts/auth/useAuth";
-// import { useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -24,8 +24,7 @@ export const SignUp = () => {
     clearError,
     state: { loading, error },
   } = useAuth();
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const navigate = useNavigate();
 
   // Clear error when unmounting
   useEffect(() => {
@@ -77,7 +76,8 @@ export const SignUp = () => {
               <img
                 src={brewyAiLogo}
                 alt="Brewy AI Logo"
-                style={{ maxWidth: "200px" }}
+                style={{ maxWidth: "200px", cursor: "pointer" }}
+                onClick={() => navigate("/")}
               />
             </Box>
 

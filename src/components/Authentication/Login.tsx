@@ -97,7 +97,8 @@ export const Login = () => {
               <img
                 src={brewyAiLogo}
                 alt="Brewy AI Logo"
-                style={{ maxWidth: "200px" }}
+                style={{ maxWidth: "200px", cursor: "pointer" }}
+                onClick={() => navigate("/")}
               />
             </Box>
 

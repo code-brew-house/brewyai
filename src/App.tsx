@@ -19,8 +19,7 @@ import { RefundPolicy } from "./components/Pages/RefundPolicy";
 import { TermsOfService } from "./components/Pages/TermsOfService";
 import { PrivacyPolicy } from "./components/Pages/PrivacyPolicy";
 import { Page404 } from "./404";
-
-const Dashboard = () => <h1>Dashboard</h1>;
+import { Dashboard } from "./components/Dashboard";
 
 function App() {
   return (
@@ -57,40 +56,17 @@ function App() {
               }
             />
           }
-          //TODO: remove this once we have a proper auth system
-          // element={
-          //   <LoggedInLayout>
-          //     <Analysis />
-          //   </LoggedInLayout>
-          // }
         />
-        {/* <Route
-          path="/campaigns"
+        <Route
+          path="/reports"
           element={
             <RequireAuth
               element={
-                <Layout>
-                  <Campaigns />
-                </Layout>
+                <LoggedInLayout>
+                  <Reports />
+                </LoggedInLayout>
               }
             />
-          }
-        /> */}
-        <Route
-          path="/reports"
-          // element={
-          //   <RequireAuth
-          //     element={
-          //       <Layout>
-          //         <Reports />
-          //       </Layout>
-          //     }
-          //   />
-          // }
-          element={
-            <LoggedInLayout>
-              <Reports />
-            </LoggedInLayout>
           }
         />
 
