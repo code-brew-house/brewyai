@@ -1,5 +1,6 @@
 import "./App.css";
-import { Layout } from "./components/Layout";
+import { LoggedInLayout } from "./components/Layout/LoggedInLayout";
+import { SiteLayout } from "./components/Layout/SiteLayout";
 import { Route, Routes } from "react-router";
 import { Login } from "./components/Authentication/Login";
 import { SignUp } from "./components/Authentication/SignUp";
@@ -9,9 +10,16 @@ import { Home } from "./components/Home";
 // import { PrivateRoute } from "./components/Authentication/PrivateRoute";
 import { RequireAuth } from "./components/Authentication/RequireAuth";
 import { Reports } from "./components/Reports";
+import { PricingPlans } from "./components/Pages/PricingPlans";
+import { Faq } from "./components/Pages/Faq";
+import { AboutUs } from "./components/Pages/AboutUs";
+import { TermsConditions } from "./components/Pages/TermsConditions";
+import { ContactUs } from "./components/Pages/ContactUs";
+import { RefundPolicy } from "./components/Pages/RefundPolicy";
+import { TermsOfService } from "./components/Pages/TermsOfService";
+import { PrivacyPolicy } from "./components/Pages/PrivacyPolicy";
+import { Page404 } from "./404";
 
-// Placeholder components for new routes
-const Campaigns = () => <h1>Campaigns</h1>;
 const Dashboard = () => <h1>Dashboard</h1>;
 
 function App() {
@@ -23,18 +31,7 @@ function App() {
         {/* Authentication Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/logout"
-          element={
-            <RequireAuth
-              element={
-                <Layout>
-                  <Logout />
-                </Layout>
-              }
-            />
-          }
-        />
+        <Route path="/logout" element={<RequireAuth element={<Logout />} />} />
 
         {/* Product Routes */}
         <Route
@@ -42,32 +39,32 @@ function App() {
           element={
             <RequireAuth
               element={
-                <Layout>
+                <LoggedInLayout>
                   <Dashboard />
-                </Layout>
+                </LoggedInLayout>
               }
             />
           }
         />
         <Route
           path="/analysis"
-          // element={
-          //   <RequireAuth
-          //     element={
-          //       <Layout>
-          //         <Analysis />
-          //       </Layout>
-          //     }
-          //   />
-          // }
-          //TODO: remove this once we have a proper auth system
           element={
-            <Layout>
-              <Analysis />
-            </Layout>
+            <RequireAuth
+              element={
+                <LoggedInLayout>
+                  <Analysis />
+                </LoggedInLayout>
+              }
+            />
           }
+          //TODO: remove this once we have a proper auth system
+          // element={
+          //   <LoggedInLayout>
+          //     <Analysis />
+          //   </LoggedInLayout>
+          // }
         />
-        <Route
+        {/* <Route
           path="/campaigns"
           element={
             <RequireAuth
@@ -78,7 +75,7 @@ function App() {
               }
             />
           }
-        />
+        /> */}
         <Route
           path="/reports"
           // element={
@@ -91,9 +88,9 @@ function App() {
           //   />
           // }
           element={
-            <Layout>
+            <LoggedInLayout>
               <Reports />
-            </Layout>
+            </LoggedInLayout>
           }
         />
 
@@ -101,73 +98,73 @@ function App() {
         <Route
           path="/pricing-plans"
           element={
-            <Layout>
-              <h1>Pricing & Plans</h1>
-            </Layout>
+            <SiteLayout>
+              <PricingPlans />
+            </SiteLayout>
           }
         />
         <Route
           path="/faq"
           element={
-            <Layout>
-              <h1>FAQ</h1>
-            </Layout>
+            <SiteLayout>
+              <Faq />
+            </SiteLayout>
           }
         />
         <Route
           path="/about-us"
           element={
-            <Layout>
-              <h1>About Us</h1>
-            </Layout>
+            <SiteLayout>
+              <AboutUs />
+            </SiteLayout>
           }
         />
         <Route
           path="/terms-of-service"
           element={
-            <Layout>
-              <h1>Terms of Service</h1>
-            </Layout>
+            <SiteLayout>
+              <TermsOfService />
+            </SiteLayout>
           }
         />
         <Route
           path="/contact-us"
           element={
-            <Layout>
-              <h1>Contact Us</h1>
-            </Layout>
+            <SiteLayout>
+              <ContactUs />
+            </SiteLayout>
           }
         />
         <Route
           path="/refund-policy"
           element={
-            <Layout>
-              <h1>Refund Policy</h1>
-            </Layout>
+            <SiteLayout>
+              <RefundPolicy />
+            </SiteLayout>
           }
         />
         <Route
           path="/terms-conditions"
           element={
-            <Layout>
-              <h1>Terms & Conditions</h1>
-            </Layout>
+            <SiteLayout>
+              <TermsConditions />
+            </SiteLayout>
           }
         />
         <Route
           path="/privacy-policy"
           element={
-            <Layout>
-              <h1>Privacy Policy</h1>
-            </Layout>
+            <SiteLayout>
+              <PrivacyPolicy />
+            </SiteLayout>
           }
         />
         <Route
           path="/sitemap"
           element={
-            <Layout>
+            <SiteLayout>
               <h1>Sitemap</h1>
-            </Layout>
+            </SiteLayout>
           }
         />
 
@@ -175,9 +172,9 @@ function App() {
         <Route
           path="*"
           element={
-            <Layout>
-              <h1>404 Not Found</h1>
-            </Layout>
+            <SiteLayout>
+              <Page404 />
+            </SiteLayout>
           }
         />
       </Routes>
