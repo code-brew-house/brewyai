@@ -20,6 +20,7 @@ export const ContactUs = () => {
     <Section
       title="Contact Us"
       description="Got any questions? Schedule a call below at your convenient time and we'll get back to you faster than your top agent!"
+      withoutTopMargin
     >
       <div
         className="calendly-inline-widget"
