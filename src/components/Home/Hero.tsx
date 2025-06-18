@@ -29,7 +29,16 @@ export const Hero = () => {
             <Button variant="contained" className="hero-button-primary">
               Get Started
             </Button>
-            <Button variant="outlined" className="hero-button-secondary">
+            <Button
+              variant="outlined"
+              className="hero-button-secondary"
+              onClick={() =>
+                window.open(
+                  "https://calendly.com/neha-codebrewhouse/brewy-ai-discovery-and-demo",
+                  "_blank"
+                )
+              }
+            >
               Request a Demo
             </Button>
           </div>

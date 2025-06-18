@@ -54,7 +54,12 @@ export const Header = () => {
           <Button
             variant="outlined"
             className="demo-button"
-            onClick={() => navigate("/analysis")}
+            onClick={() =>
+              window.open(
+                "https://calendly.com/neha-codebrewhouse/brewy-ai-discovery-and-demo",
+                "_blank"
+              )
+            }
           >
             Request a Demo
           </Button>
