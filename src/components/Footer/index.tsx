@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
       <div className="footer-content">
         <div className="footer-columns">
           {/* Column 1 - Logo */}
-          <div className="footer-column">
+          <div className="footer-column logo-column">
             <div className="logo">
               <img
                 src={brewyAiWhiteLogo}
@@ -33,9 +33,6 @@ export const Footer: React.FC = () => {
               <li>
                 <a href="/pricing-plans">Pricing & Plans</a>
               </li>
-              <li>
-                <a href="/faq">FAQ</a>
-              </li>
             </ul>
           </div>
 
@@ -47,20 +44,23 @@ export const Footer: React.FC = () => {
                 <a href="/about-us">About Us</a>
               </li>
               <li>
-                <a href="/terms-of-service">Terms of Service</a>
-              </li>
-              <li>
                 <a href="/contact-us">Contact Us</a>
               </li>
+              <li>
+                <a href="/faq">FAQ</a>
+              </li>
+              {/* <li>
+                <a href="/terms-of-service">Terms of Service</a>
+              </li> */}
             </ul>
           </div>
 
           {/* Column 4 - Additional Links */}
           <div className="footer-column no-title">
             <ul>
-              <li>
+              {/* <li>
                 <a href="/refund-policy">Refund Policy</a>
-              </li>
+              </li> */}
               <li>
                 <a href="/terms-conditions">Terms & Conditions</a>
               </li>

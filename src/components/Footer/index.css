@@ -25,6 +25,10 @@
 .footer-column {
   display: flex;
   flex-direction: column;
+  
+}
+
+.footer-column.logo-column {
   justify-content: space-between;
 }
 

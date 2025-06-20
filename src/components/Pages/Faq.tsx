@@ -1,7 +1,13 @@
+import { Section } from "../Section";
+
 export const Faq = () => {
   return (
-    <div>
-      <h1>FAQ</h1>
-    </div>
+    <Section
+      title="FAQ"
+      description="How does brewy.ai work it's magic"
+      withoutTopMargin
+    >
+      <p>Coming Soon!</p>
+    </Section>
   );
 };
