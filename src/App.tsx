@@ -18,6 +18,7 @@ import { ContactUs } from "./components/Pages/ContactUs";
 import { RefundPolicy } from "./components/Pages/RefundPolicy";
 import { TermsOfService } from "./components/Pages/TermsOfService";
 import { PrivacyPolicy } from "./components/Pages/PrivacyPolicy";
+import { StyleGuide } from "./components/Pages/StyleGuide";
 import { Page404 } from "./404";
 import { Dashboard } from "./components/Dashboard";
 
@@ -132,6 +133,14 @@ function App() {
           element={
             <SiteLayout>
               <PrivacyPolicy />
+            </SiteLayout>
+          }
+        />
+        <Route
+          path="/style-guide"
+          element={
+            <SiteLayout>
+              <StyleGuide />
             </SiteLayout>
           }
         />
