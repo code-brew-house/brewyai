@@ -32,13 +32,21 @@ type TonalityResult = {
 const analysisApi = axios.create({
   baseURL: API_URL,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
     "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Headers": "",
     "Access-Control-Expose-Headers": "*",
   },
+});
+
+analysisApi.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export const analyzeAudio = async (request: AnalysisRequest) => {

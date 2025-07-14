@@ -69,6 +69,8 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  console.log({ user: state.user });
+
   // Function to fetch user data
   const fetchUserData = useCallback(async (token: string) => {
     try {
