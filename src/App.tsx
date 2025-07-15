@@ -1,6 +1,7 @@
 import "./App.css";
 import { LoggedInLayout } from "./components/Layout/LoggedInLayout";
 import { SiteLayout } from "./components/Layout/SiteLayout";
+import { HomeLayout } from "./components/Layout/HomeLayout";
 import { Route, Routes } from "react-router";
 import { Login } from "./components/Authentication/Login";
 import { SignUp } from "./components/Authentication/SignUp";
@@ -26,7 +27,14 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <HomeLayout>
+              <Home />
+            </HomeLayout>
+          }
+        />
 
         {/* Authentication Routes */}
         <Route path="/login" element={<Login />} />
