@@ -1,9 +1,14 @@
 .primaryCTA {
-    background-color: #EDE7F6;  /* deepPurple[50] */
+    background-color: white;
     padding: 4rem 2rem;
     text-align: center;
     border-radius: 8px;
     margin: 2rem 0;
+    margin-top: 8rem;
+
+    box-shadow: 0px 0px 10px 10px rgba(252,206,232,0.7);
+    -webkit-box-shadow: 0px 0px 10px 10px rgba(252,206,232,0.7);
+    -moz-box-shadow: 0px 0px 10px 10px rgba(252,206,232,0.7);
 }
 
 .primaryCTA__title {
