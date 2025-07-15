@@ -8,11 +8,39 @@
 
 .featured-section-container > * {
   flex: 1;
-  min-width: 0; /* Prevents flex items from overflowing */
+  min-width: 0;
 }
 
-.featured-card-title {
-  font-size: 18px !important;
-  font-weight: 700 !important;
-  margin-bottom: 8px !important;
+.featured-section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.underlined-text-highlight {
+  display: inline-block;
+  position: relative;
+}
+
+.underlined-text-highlight::after {
+  content: " ";
+  position: absolute;
+  top: 45%;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background-color: var(--color-violet-900);
+  transform: rotate(-1.5deg);
+  z-index: -1;
+  border-radius: 100px;
+}
+
+/* Featured card styles */
+.featured-section-container .MuiCard-root {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  padding: 1.5rem;
 }
