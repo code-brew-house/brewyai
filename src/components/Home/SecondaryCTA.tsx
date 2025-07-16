@@ -1,4 +1,4 @@
-import { Button, Chip, colors } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import "./secondaryCTAStyles.css";
 
 export const SecondaryCTA = () => {
