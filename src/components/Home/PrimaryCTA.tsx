@@ -25,6 +25,12 @@ export const PrimaryCTA: React.FC = () => {
         color="primary"
         size="large"
         className="primaryCTA__button"
+        onClick={() => {
+          window.open(
+            "https://calendly.com/neha-codebrewhouse/brewy-ai-discovery-and-demo",
+            "_blank"
+          );
+        }}
       >
         Get Started
       </Button>
