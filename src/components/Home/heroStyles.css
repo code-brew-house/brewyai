@@ -3,15 +3,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: 450px;
+    min-height: 750px;
     padding: 1rem 2rem;
-    margin-top: 1rem;
-    /* border-radius: 10px;
-    background-image: url('../../assets/home-hero.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; */
-
+    margin-top: 8rem;
 }
 
 .hero-text {
@@ -49,6 +43,12 @@
     border-radius: 8px;
 }
 
-.hero-button-secondary {
-
+.hero-dashboard-image {
+    max-width: 800px;
+    width: 80%;
+    width: 100%;
+    margin-top: 4rem;
+    box-shadow: 0px 0px 5px 5px rgba(184,230,254,0.7);
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(184,230,254,0.7);
+    -moz-box-shadow: 0px 0px 5px 5px rgba(184,230,254,0.7);
 }

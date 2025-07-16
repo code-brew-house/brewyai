@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import "./heroStyles.css";
+import dashboardImage from "../../assets/dashboard-image.png";
 
 export const Hero = () => {
   return (
@@ -42,6 +43,12 @@ export const Hero = () => {
               Request a Demo
             </Button> */}
           </div>
+
+          <img
+            src={dashboardImage}
+            alt="Dashboard Preview"
+            className="hero-dashboard-image"
+          />
         </div>
       </div>
     </section>
