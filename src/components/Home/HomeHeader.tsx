@@ -47,7 +47,7 @@ export const Header = () => {
       <div className="header-container">
         <div className="logo-container">
           <a href="/">
-            <img src={brewyAiLogo} alt="Brewy AI Logo" className="logo" />
+            <img src={brewyAiLogo} alt="Brewy AI Logo" className="home-logo" />
           </a>
         </div>
         <div className="home-buttons-container">

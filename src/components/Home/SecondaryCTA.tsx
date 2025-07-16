@@ -25,8 +25,10 @@ export const SecondaryCTA = () => {
           variant="contained"
           className="secondary-cta__button"
           onClick={() => {
-            // Add demo request handling logic here
-            console.log("Demo requested");
+            window.open(
+              "https://calendly.com/neha-codebrewhouse/brewy-ai-discovery-and-demo",
+              "_blank"
+            );
           }}
         >
           Request Demo
