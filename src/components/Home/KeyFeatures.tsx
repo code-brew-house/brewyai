@@ -66,7 +66,7 @@ const KeyFeatureCard = ({
 }) => {
   return (
     <Box className="key-feature-card">
-      <Icon component={icon} color="primary" />
+      <Icon component={icon} sx={{ color: "var(--color-violet-900)" }} />
       <Typography variant="h6">{title}</Typography>
       <Typography variant="body1">{description}</Typography>
     </Box>
