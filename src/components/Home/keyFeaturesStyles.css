@@ -13,18 +13,10 @@
   align-items: center;
   text-align: center;
   padding: 24px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, border 0.2s ease-in-out;
+  border: none;
+  border-radius: 10px;
   height: 100%;
-  background-color: transparent;
-}
-
-.key-feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background-color: #f3e5f5;  /* This is deepPurple[50] */
-  border-color: transparent;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .key-feature-card .MuiIcon-root {
@@ -60,4 +52,29 @@
     grid-template-columns: 1fr;
     grid-template-rows: repeat(8, 1fr);
   }
+}
+
+.featured-section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.underlined-text-highlight {
+  display: inline-block;
+  position: relative;
+}
+
+.underlined-text-highlight::after {
+  content: " ";
+  position: absolute;
+  top: 45%;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background-color: var(--color-violet-900);
+  transform: rotate(-1.5deg);
+  z-index: -1;
+  border-radius: 100px;
 }

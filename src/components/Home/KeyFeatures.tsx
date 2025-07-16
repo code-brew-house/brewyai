@@ -1,5 +1,5 @@
 import { Box, Icon, Typography } from "@mui/material";
-import { Section } from "../Section";
+import { Section } from "./HomeSection";
 import "./keyFeaturesStyles.css";
 import {
   CloudUpload,
@@ -73,13 +73,24 @@ const KeyFeatureCard = ({
   );
 };
 
+const SectionTitle = () => {
+  return (
+    <h2 className="featured-section-title">
+      <span className="underlined-text-highlight">
+        Revolutionizing Business
+      </span>
+      &nbsp;with AI Technology
+    </h2>
+  );
+};
+
 export const KeyFeatures = () => {
   return (
     <Section
-      title="Revolutionizing Business with AI Technology"
-      description="How brewy.ai can help you optimize processes, improve decision-making and foster innovation, enabling you to stay ahead in a rapidly changing business landscape."
-      centerAlignText
+      title={<SectionTitle />}
+      description="Optimize processes, improve decision-making and foster innovation. Stay ahead in a rapidly changing business landscape."
       tag="Features"
+      tagColor="var(--color-violet-300)"
     >
       <Box className="key-features-container">
         {keyFeaturesData.map((item) => (

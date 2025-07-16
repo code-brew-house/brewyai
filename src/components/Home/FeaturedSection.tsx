@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
 // import { Section } from "../Section";
 import "./featuredSectionStyles.css";
+import { Section } from "./HomeSection";
 
 const cardData = [
   {
@@ -50,14 +51,39 @@ const FeaturedCard = ({
 export const FeaturedSection = () => {
   return (
     <>
-      <Box sx={{ textAlign: "center", margin: "2rem 0" }}>
-        <h2 className="featured-section-title">
-          Transform Your Audio into&nbsp;
-          <span className="underlined-text-highlight">
-            Actionable Intelligence
-          </span>
-        </h2>
-
+      <Section
+        title={
+          <h2 className="featured-section-title">
+            Transform Your Audio into&nbsp;
+            <span className="underlined-text-highlight">
+              Actionable Intelligence
+            </span>
+          </h2>
+        }
+        description={
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: "1.2rem",
+              color: "text.secondary",
+              marginTop: "0.5rem",
+              textAlign: "center",
+            }}
+          >
+            Tired of sifting through hours of recordings? <br /> Wish you could
+            instantly find key information buried in your audio files? <br />
+            <strong className="text-highlight">brewy.ai</strong> is here to
+            help!
+          </Typography>
+        }
+      >
+        <Box className="featured-section-container" sx={{ marginTop: "2rem" }}>
+          {cardData.map((item) => (
+            <FeaturedCard {...item} />
+          ))}
+        </Box>
+      </Section>
+      {/* <Box sx={{ textAlign: "center", margin: "2rem 0" }}>
         <Typography
           variant="body1"
           sx={{
@@ -76,7 +102,7 @@ export const FeaturedSection = () => {
             <FeaturedCard {...item} />
           ))}
         </Box>
-      </Box>
+      </Box> */}
 
       {/* <Section
         title="Transform Your Audio into Actionable Intelligence."
