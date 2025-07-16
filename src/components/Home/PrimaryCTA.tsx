@@ -7,11 +7,11 @@ export const PrimaryCTA: React.FC = () => {
     <div className="primaryCTA">
       <Chip
         label="Begin Your Journey with brewy.ai"
-        className="color-blue-300"
         sx={{
           fontWeight: 500,
           textTransform: "uppercase",
           marginBottom: "-50px",
+          backgroundColor: "var(--color-violet-200)",
         }}
       />
       <h2 className="primaryCTA__title">Experience our AI Solutions Today</h2>

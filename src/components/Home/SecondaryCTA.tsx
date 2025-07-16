@@ -8,7 +8,7 @@ export const SecondaryCTA = () => {
         <Chip
           label="How We Can Help You"
           sx={{
-            backgroundColor: colors.deepPurple[100],
+            backgroundColor: "var(--color-violet-200)",
             fontWeight: 500,
             textTransform: "uppercase",
             marginBottom: "-30px",

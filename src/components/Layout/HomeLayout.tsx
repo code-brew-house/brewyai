@@ -1,5 +1,5 @@
 import type { LayoutProps } from "./types";
-import homeBg from "../../assets/home-bg.svg";
+import homeBg from "../../assets/home-bg-1.svg";
 
 export const HomeLayout = ({ children }: LayoutProps) => {
   return (

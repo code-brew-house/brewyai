@@ -3,12 +3,11 @@
     padding: 4rem 2rem;
     text-align: center;
     border-radius: 8px;
-    margin: 2rem 0;
-    margin-top: 8rem;
+    margin: 6rem 0;
 
-    box-shadow: 0px 0px 10px 10px rgba(252,206,232,0.7);
-    -webkit-box-shadow: 0px 0px 10px 10px rgba(252,206,232,0.7);
-    -moz-box-shadow: 0px 0px 10px 10px rgba(252,206,232,0.7);
+    box-shadow: 0px 0px 5px 5px rgba(252,206,232,0.3);
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(252,206,232,0.3);
+    -moz-box-shadow: 0px 0px 5px 5px rgba(252,206,232,0.3);
 }
 
 .primaryCTA__title {

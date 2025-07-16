@@ -90,7 +90,7 @@ export const KeyFeatures = () => {
       title={<SectionTitle />}
       description="Optimize processes, improve decision-making and foster innovation. Stay ahead in a rapidly changing business landscape."
       tag="Features"
-      tagColor="var(--color-violet-300)"
+      tagColor="var(--color-violet-200)"
     >
       <Box className="key-features-container">
         {keyFeaturesData.map((item) => (

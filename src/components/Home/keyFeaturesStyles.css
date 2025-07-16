@@ -53,28 +53,3 @@
     grid-template-rows: repeat(8, 1fr);
   }
 }
-
-.featured-section-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.underlined-text-highlight {
-  display: inline-block;
-  position: relative;
-}
-
-.underlined-text-highlight::after {
-  content: " ";
-  position: absolute;
-  top: 45%;
-  right: 0;
-  left: 0;
-  width: 100%;
-  height: 60%;
-  background-color: var(--color-violet-900);
-  transform: rotate(-1.5deg);
-  z-index: -1;
-  border-radius: 100px;
-}

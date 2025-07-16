@@ -25,13 +25,13 @@
 .underlined-text-highlight::after {
   content: " ";
   position: absolute;
-  top: 45%;
+  top: 80%;
   right: 0;
   left: 0;
   width: 100%;
-  height: 60%;
-  background-color: var(--color-violet-900);
-  transform: rotate(-1.5deg);
+  height: 15%;
+  background-color: var(--color-sky-600);
+  transform: rotate(-1deg);
   z-index: -1;
   border-radius: 100px;
 }
