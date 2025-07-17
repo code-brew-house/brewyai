@@ -4,7 +4,7 @@ import {
   GitHub as GitHubIcon,
 } from "@mui/icons-material";
 import "./index.css";
-import brewyAiWhiteLogo from "/src/assets/brewy-ai-text-white.png";
+import brewyAiTextLogo from "/src/assets/brewy-ai-text-logo.png";
 
 export const Footer: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
           <div className="footer-column logo-column">
             <div className="logo">
               <img
-                src={brewyAiWhiteLogo}
+                src={brewyAiTextLogo}
                 alt="Brewy AI"
                 className="footer-logo"
               />

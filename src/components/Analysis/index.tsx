@@ -9,6 +9,8 @@ import {
   IconButton,
   // Typography,
   InputLabel,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import { Section } from "../Section";
 import "./index.css";
@@ -26,10 +28,18 @@ interface AudioFile {
   url: string;
 }
 
+interface AlertState {
+  open: boolean;
+  message: string;
+  severity: "error" | "warning" | "info" | "success";
+}
+
 const AudioUpload = ({
   onFileChange,
+  onAlert,
 }: {
   onFileChange: (file: AudioFile | null) => void;
+  onAlert: (alert: AlertState) => void;
 }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<AudioFile | null>(null);
@@ -40,7 +50,11 @@ const AudioUpload = ({
     if (!file) return;
 
     if (!file.type.startsWith("audio/")) {
-      alert("Please upload an audio file");
+      onAlert({
+        open: true,
+        message: "Please upload an audio file",
+        severity: "error",
+      });
       return;
     }
 
@@ -59,7 +73,11 @@ const AudioUpload = ({
       onFileChange(audioFile);
     } catch (error) {
       console.error("Error uploading file:", error);
-      alert("Failed to upload file");
+      onAlert({
+        open: true,
+        message: "Failed to upload file",
+        severity: "error",
+      });
       onFileChange(null);
     } finally {
       setIsUploading(false);
@@ -230,9 +248,22 @@ const AudioUpload = ({
 export const Analysis = () => {
   const [audioFile, setAudioFile] = useState<AudioFile | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [alert, setAlert] = useState<AlertState>({
+    open: false,
+    message: "",
+    severity: "error",
+  });
   const {
     state: { user },
   } = useAuth();
+
+  const handleAlert = (newAlert: AlertState) => {
+    setAlert(newAlert);
+  };
+
+  const handleCloseAlert = () => {
+    setAlert((prev) => ({ ...prev, open: false }));
+  };
 
   const handleAnalyze = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -250,7 +281,11 @@ export const Analysis = () => {
       // TODO: Handle the analysis response (e.g., show results, navigate to reports)
     } catch (error) {
       console.error("Error analyzing audio:", error);
-      alert("Failed to analyze audio. Please try again.");
+      setAlert({
+        open: true,
+        message: "Failed to analyze audio. Please try again.",
+        severity: "error",
+      });
     } finally {
       setIsAnalyzing(false);
     }
@@ -281,7 +316,7 @@ export const Analysis = () => {
             >
               Upload Audio Recording
             </InputLabel>
-            <AudioUpload onFileChange={setAudioFile} />
+            <AudioUpload onFileChange={setAudioFile} onAlert={handleAlert} />
           </FormControl>
 
           {/* <FormControl
@@ -344,6 +379,21 @@ export const Analysis = () => {
           </Button>
         </form>
       </div>
+
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={6000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseAlert}
+          severity={alert.severity}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </Section>
   );
 };

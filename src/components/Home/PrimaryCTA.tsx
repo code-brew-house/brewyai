@@ -8,10 +8,10 @@ export const PrimaryCTA: React.FC = () => {
       <Chip
         label="Begin Your Journey with brewy.ai"
         sx={{
-          backgroundColor: "white",
           fontWeight: 500,
           textTransform: "uppercase",
           marginBottom: "-50px",
+          backgroundColor: "var(--color-violet-200)",
         }}
       />
       <h2 className="primaryCTA__title">Experience our AI Solutions Today</h2>
@@ -25,6 +25,12 @@ export const PrimaryCTA: React.FC = () => {
         color="primary"
         size="large"
         className="primaryCTA__button"
+        onClick={() => {
+          window.open(
+            "https://calendly.com/neha-codebrewhouse/brewy-ai-discovery-and-demo",
+            "_blank"
+          );
+        }}
       >
         Get Started
       </Button>

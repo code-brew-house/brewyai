@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
-import { Section } from "../Section";
+// import { Section } from "../Section";
 import "./featuredSectionStyles.css";
+import { Section } from "./HomeSection";
 
 const cardData = [
   {
@@ -28,12 +29,20 @@ const FeaturedCard = ({
   description: string;
 }) => {
   return (
-    <Card variant="outlined">
+    <Card>
       <CardContent>
-        <Typography variant="h4" className="featured-card-title">
+        <Typography
+          variant="h4"
+          sx={{
+            fontSize: "18px",
+            fontWeight: 700,
+            marginBottom: "1rem",
+          }}
+          align="left"
+        >
           {title}
         </Typography>
-        <Typography>{description}</Typography>
+        <Typography align="left">{description}</Typography>
       </CardContent>
     </Card>
   );
@@ -43,6 +52,59 @@ export const FeaturedSection = () => {
   return (
     <>
       <Section
+        title={
+          <h2 className="featured-section-title">
+            Transform Your Audio into&nbsp;
+            <span className="underlined-text-highlight">
+              Actionable Intelligence
+            </span>
+          </h2>
+        }
+        description={
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: "1.2rem",
+              color: "text.secondary",
+              marginTop: "0.5rem",
+              textAlign: "center",
+            }}
+          >
+            Tired of sifting through hours of recordings? <br /> Wish you could
+            instantly find key information buried in your audio files? <br />
+            <strong className="text-highlight">brewy.ai</strong> is here to
+            help!
+          </Typography>
+        }
+      >
+        <Box className="featured-section-container" sx={{ marginTop: "2rem" }}>
+          {cardData.map((item) => (
+            <FeaturedCard {...item} />
+          ))}
+        </Box>
+      </Section>
+      {/* <Box sx={{ textAlign: "center", margin: "2rem 0" }}>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: "1.2rem",
+            color: "text.secondary",
+            marginTop: "0.5rem",
+          }}
+        >
+          Tired of sifting through hours of recordings? <br /> Wish you could
+          instantly find key information buried in your audio files? <br />
+          <strong className="text-highlight">brewy.ai</strong> is here to help!
+        </Typography>
+
+        <Box className="featured-section-container" sx={{ marginTop: "2rem" }}>
+          {cardData.map((item) => (
+            <FeaturedCard {...item} />
+          ))}
+        </Box>
+      </Box> */}
+
+      {/* <Section
         title="Transform Your Audio into Actionable Intelligence."
         description="Tired of sifting through hours of recordings? Wish you could instantly find key information buried in your audio files? Brewy.ai is here to help."
         centerAlignText
@@ -52,7 +114,7 @@ export const FeaturedSection = () => {
             <FeaturedCard {...item} />
           ))}
         </Box>
-      </Section>
+      </Section> */}
     </>
   );
 };

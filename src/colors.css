@@ -1,0 +1,49 @@
+:root {
+  /* Primary Palette - Violet */
+  --color-violet-100: oklch(0.943 0.029 294.588);
+  --color-violet-200: oklch(0.894 0.057 293.283);
+  --color-violet-300: oklch(0.811 0.111 293.571);
+  --color-violet-400: oklch(0.702 0.183 293.541);
+  --color-violet-500: oklch(0.606 0.25 292.717);
+  --color-violet-600: oklch(0.541 0.281 293.009);
+  --color-violet-700: oklch(0.491 0.27 292.581);
+  --color-violet-800: oklch(0.432 0.232 292.759);
+  --color-violet-900: oklch(0.38 0.189 293.745);
+
+  /* Secondary Palette - Pink */
+  --color-pink-50: oklch(0.971 0.014 343.198);  
+  --color-pink-100: oklch(0.948 0.028 342.258);  
+  --color-pink-200: oklch(0.899 0.061 343.231);  
+  --color-pink-300: oklch(0.823 0.12 346.018);  
+  --color-pink-400: oklch(0.718 0.202 349.761);  
+  --color-pink-500: oklch(0.656 0.241 354.308);  
+  --color-pink-600: oklch(0.592 0.249 0.584);  
+  --color-pink-700: oklch(0.525 0.223 3.958);  
+  --color-pink-800: oklch(0.459 0.187 3.815);  
+  --color-pink-900: oklch(0.408 0.153 2.432);  
+  --color-pink-950: oklch(0.284 0.109 3.907);
+
+  /* Tertiary Palette - Sky */
+  --color-sky-50: oklch(0.977 0.013 236.62);  
+  --color-sky-100: oklch(0.951 0.026 236.824);  
+  --color-sky-200: oklch(0.901 0.058 230.902);  
+  --color-sky-300: oklch(0.828 0.111 230.318);  
+  --color-sky-400: oklch(0.746 0.16 232.661);  
+  --color-sky-500: oklch(0.685 0.169 237.323);  
+  --color-sky-600: oklch(0.588 0.158 241.966);  
+  --color-sky-700: oklch(0.5 0.134 242.749);  
+  --color-sky-800: oklch(0.443 0.11 240.79);  
+  --color-sky-900: oklch(0.391 0.09 240.876);  
+  --color-sky-950: oklch(0.293 0.066 243.157);
+
+  /* Neutral Palette - Gray */
+  --color-gray-100: oklch(0.967 0.003 264.542);
+  --color-gray-200: oklch(0.928 0.006 264.531);
+  --color-gray-300: oklch(0.872 0.01 258.338);
+  --color-gray-400: oklch(0.707 0.022 261.325);
+  --color-gray-500: oklch(0.551 0.027 264.364);
+  --color-gray-600: oklch(0.446 0.03 256.802);
+  --color-gray-700: oklch(0.373 0.034 259.733);
+  --color-gray-800: oklch(0.278 0.033 256.848);
+  --color-gray-900: oklch(0.21 0.034 264.665);
+} 

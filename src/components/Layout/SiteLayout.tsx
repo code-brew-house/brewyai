@@ -4,10 +4,10 @@ import type { LayoutProps } from "./types";
 
 export const SiteLayout = ({ children }: LayoutProps) => {
   return (
-    <>
+    <div className="layoutContainer">
       <HomeHeader />
       <div>{children}</div>
       <Footer />
-    </>
+    </div>
   );
 };
