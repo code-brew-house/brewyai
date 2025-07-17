@@ -1,4 +1,4 @@
-import { Button, Chip, colors } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import "./secondaryCTAStyles.css";
 
 export const SecondaryCTA = () => {
@@ -8,7 +8,7 @@ export const SecondaryCTA = () => {
         <Chip
           label="How We Can Help You"
           sx={{
-            backgroundColor: colors.deepPurple[100],
+            backgroundColor: "var(--color-violet-200)",
             fontWeight: 500,
             textTransform: "uppercase",
             marginBottom: "-30px",
@@ -25,8 +25,10 @@ export const SecondaryCTA = () => {
           variant="contained"
           className="secondary-cta__button"
           onClick={() => {
-            // Add demo request handling logic here
-            console.log("Demo requested");
+            window.open(
+              "https://calendly.com/neha-codebrewhouse/brewy-ai-discovery-and-demo",
+              "_blank"
+            );
           }}
         >
           Request Demo

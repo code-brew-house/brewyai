@@ -1,6 +1,7 @@
 import "./App.css";
 import { LoggedInLayout } from "./components/Layout/LoggedInLayout";
 import { SiteLayout } from "./components/Layout/SiteLayout";
+import { HomeLayout } from "./components/Layout/HomeLayout";
 import { Route, Routes } from "react-router";
 import { Login } from "./components/Authentication/Login";
 import { SignUp } from "./components/Authentication/SignUp";
@@ -18,6 +19,7 @@ import { ContactUs } from "./components/Pages/ContactUs";
 import { RefundPolicy } from "./components/Pages/RefundPolicy";
 import { TermsOfService } from "./components/Pages/TermsOfService";
 import { PrivacyPolicy } from "./components/Pages/PrivacyPolicy";
+import { StyleGuide } from "./components/Pages/StyleGuide";
 import { Page404 } from "./404";
 import { Dashboard } from "./components/Dashboard";
 
@@ -25,7 +27,14 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <HomeLayout>
+              <Home />
+            </HomeLayout>
+          }
+        />
 
         {/* Authentication Routes */}
         <Route path="/login" element={<Login />} />
@@ -132,6 +141,14 @@ function App() {
           element={
             <SiteLayout>
               <PrivacyPolicy />
+            </SiteLayout>
+          }
+        />
+        <Route
+          path="/style-guide"
+          element={
+            <SiteLayout>
+              <StyleGuide />
             </SiteLayout>
           }
         />
