@@ -35,7 +35,7 @@ export const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signup({ email, password, username, name });
+    await signup({ email, password, username, fullName: name });
   };
 
   return (

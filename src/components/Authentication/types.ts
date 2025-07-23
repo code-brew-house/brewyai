@@ -39,5 +39,5 @@ export interface SignUpCredentials {
   email: string;
   username: string;
   password: string;
-  name: string;
+  fullName: string;
 }
