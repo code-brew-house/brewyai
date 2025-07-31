@@ -63,3 +63,14 @@ export const loginSuperOwner = async (
     throw error;
   }
 };
+
+export const logoutUser = async (): Promise<void> => {
+  try {
+    await authApi.post("/auth/logout");
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Failed to logout");
+    }
+    throw error;
+  }
+};
