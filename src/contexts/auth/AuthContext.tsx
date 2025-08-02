@@ -10,7 +10,7 @@ export const AuthContext = createContext<
   | {
       state: AuthState;
       login: (credentials: LoginCredentials) => Promise<void>;
-      signup: (credentials: SignUpCredentials) => Promise<void>;
+      register: (credentials: SignUpCredentials) => Promise<void>;
       logout: () => Promise<void>;
       clearError: () => void;
     }

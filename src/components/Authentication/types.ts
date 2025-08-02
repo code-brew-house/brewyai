@@ -31,7 +31,7 @@ export type AuthAction =
   | { type: "CLEAR_ERROR" };
 
 export interface LoginCredentials {
-  username: string;
+  identifier: string;
   password: string;
 }
 

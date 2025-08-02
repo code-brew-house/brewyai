@@ -3,12 +3,34 @@ export type RegisterSuperOwnerRequest = {
   password: string;
   fullName: string;
   email: string;
+  organizationName?: string;
+  organizationContactNumber?: string;
+  organizationEmail?: string;
 };
 
 export type RegisterSuperOwnerResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    user: UserDTO;
+    organization?: {
+      id: string;
+      name: string;
+      role: string;
+    };
+    token: string;
+    tokenType?: string;
+    expiresIn?: number;
+  };
+};
+
+type UserDTO = {
+  id: string;
   username: string;
-  fullName: string;
   email: string;
+  fullName: string;
+  organizationId: string;
+  role: string;
 };
 
 export type LoginSuperOwnerRequest = {

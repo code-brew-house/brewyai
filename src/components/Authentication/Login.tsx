@@ -17,7 +17,7 @@ import useAuth from "../../contexts/auth/useAuth";
 import { useNavigate } from "react-router";
 
 export const Login = () => {
-  const [username, setUsername] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const {
@@ -35,10 +35,11 @@ export const Login = () => {
   }, [clearError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log("here");
     e.preventDefault();
-    console.log("Attempting login with:", { username });
+    console.log("Attempting login with:", { identifier });
     try {
-      await login({ username, password });
+      await login({ identifier, password });
       console.log("Login API call completed");
     } catch (err) {
       console.error("Login error:", err);
@@ -141,8 +142,8 @@ export const Login = () => {
                 fullWidth
                 type="text"
                 placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
                 sx={{ mb: 2 }}
                 required
               />
@@ -191,12 +192,14 @@ export const Login = () => {
               </Button>
             </form>
 
-            <Typography variant="body2" align="center">
+            {/* <Typography variant="body2" align="center">
               Don't have an account?{" "}
               <Link href="/signup" underline="hover">
                 Create an account
               </Link>
-            </Typography>
+            </Typography> */}
+
+            <Box height={50}></Box>
           </Container>
         </Box>
 
@@ -207,7 +210,17 @@ export const Login = () => {
             height: "100%",
             bgcolor: deepPurple[500],
           }}
-        />
+        >
+          {/* <Box
+            sx={{
+              width: "75%",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              opacity: "0.5",
+              zIndex: 1,
+            }}
+          ></Box> */}
+        </Box>
       </Box>
     </Box>
   );

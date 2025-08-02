@@ -47,12 +47,13 @@ export const registerSuperOwner = async (
   }
 };
 
-// Login super owner
-export const loginSuperOwner = async (
+// Login user
+export const loginUser = async (
   data: LoginSuperOwnerRequest
 ): Promise<LoginSuperOwnerResponse> => {
   try {
     const response = await authApi.post("/auth/login", data);
+    console.log({ response });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

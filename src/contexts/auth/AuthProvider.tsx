@@ -6,11 +6,7 @@ import type {
   LoginCredentials,
   SignUpCredentials,
 } from "../../components/Authentication/types";
-import {
-  login as loginApi,
-  signup as signupApi,
-  getCurrentUser,
-} from "../../api/auth";
+import { registerSuperOwner, loginUser, logoutUser } from "../../api/auth";
 import { AuthContext } from "./AuthContext";
 
 // Initial state
@@ -71,50 +67,35 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   console.log({ user: state.user });
 
-  // Function to fetch user data
-  const fetchUserData = useCallback(async (token: string) => {
+  const login = useCallback(async (credentials: LoginCredentials) => {
     try {
-      const userData = await getCurrentUser(token);
-      dispatch({ type: "USER_LOADED", payload: userData });
+      console.log("Starting login process...");
+
+      console.log("dispatching LOGIN_START");
+      dispatch({ type: "LOGIN_START" });
+
+      const response = await loginUser(credentials);
+      console.log("Login API response:", response);
+
+      // After receiving the token, fetch user data
+      console.log("dispatching USER_LOADED");
+      dispatch({ type: "USER_LOADED", payload: response });
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      console.error("Login error:", error);
       dispatch({
         type: "LOGIN_ERROR",
-        payload: "Failed to load user data",
+        payload:
+          error instanceof Error
+            ? error.message
+            : "An error occurred during login",
       });
     }
   }, []);
 
-  const login = useCallback(
-    async (credentials: LoginCredentials) => {
-      try {
-        console.log("Starting login process...");
-        dispatch({ type: "LOGIN_START" });
-        const response = await loginApi(credentials);
-        console.log("Login API response:", response);
-
-        // After receiving the token, fetch user data
-        dispatch({ type: "AUTH_TOKEN_RECEIVED" });
-        await fetchUserData(response.token);
-      } catch (error) {
-        console.error("Login error:", error);
-        dispatch({
-          type: "LOGIN_ERROR",
-          payload:
-            error instanceof Error
-              ? error.message
-              : "An error occurred during login",
-        });
-      }
-    },
-    [fetchUserData]
-  );
-
-  const signup = useCallback(async (credentials: SignUpCredentials) => {
+  const register = useCallback(async (credentials: SignUpCredentials) => {
     try {
       dispatch({ type: "SIGNUP_START" });
-      await signupApi(credentials);
-      // Don't fetch user data after signup since we don't get a token
+      await registerSuperOwner(credentials);
       dispatch({ type: "LOGOUT" });
     } catch (error) {
       dispatch({
@@ -129,6 +110,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(async () => {
     localStorage.removeItem("token");
+    await logoutUser();
     dispatch({ type: "LOGOUT" });
   }, []);
 
@@ -139,7 +121,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const value = {
     state,
     login,
-    signup,
+    register,
     logout,
     clearError,
   };
