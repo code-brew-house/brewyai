@@ -18,7 +18,7 @@ import { useState, useRef } from "react";
 import type { ChangeEvent } from "react";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
-import { analyzeAudio } from "../../api/analysis";
+import { analyzeAudio } from "../../api/analysis/old";
 import useAuth from "../../contexts/auth/useAuth";
 
 interface AudioFile {

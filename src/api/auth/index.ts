@@ -12,12 +12,12 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 const authApi = axios.create({
   baseURL: API_URL,
   headers: {
+    // "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    "Access-Control-Allow-Credentials": "true",
-    "Access-Control-Allow-Headers": "",
-    "Access-Control-Expose-Headers": "*",
+    // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    // "Access-Control-Allow-Credentials": "true",
+    // "Access-Control-Allow-Headers": "",
+    // "Access-Control-Expose-Headers": "*",
   },
 });
 
