@@ -15,6 +15,7 @@ import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/auth/useAuth";
+import { useOrganization } from "../../contexts/organization/useOrganization";
 
 export const Login = () => {
   const [identifier, setIdentifier] = useState("");
@@ -26,6 +27,8 @@ export const Login = () => {
     state: { loading, error, user },
   } = auth!;
   const navigate = useNavigate();
+  const org = useOrganization();
+  const { getCurrentOrganization } = org!;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,10 +41,16 @@ export const Login = () => {
 
   // Handle navigation after successful login
   useEffect(() => {
+    // const getUserOrganizationDetails = async () => {
+    //   if (user)
+    //     await getCurrentOrganization({ organizationId: user.organizationId });
+    // };
+
     if (!loading && !error && !!user) {
+      // if (user && user.organizationId) getUserOrganizationDetails();
       navigate("/analysis", { replace: true });
     }
-  }, [loading, error, user, navigate]);
+  }, [loading, error, user, navigate, getCurrentOrganization]);
 
   return (
     <Box

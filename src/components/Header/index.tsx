@@ -44,6 +44,7 @@ export const Header = () => {
 
   return (
     <header className="header">
+      <div className="header-left">Organization Name</div>
       <div className="header-right">
         <Avatar
           className="user-avatar"
