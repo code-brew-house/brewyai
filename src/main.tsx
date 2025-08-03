@@ -11,15 +11,18 @@ import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "./theme.ts";
 import { CssBaseline } from "@mui/material";
 import { AuthProvider } from "./contexts/auth/AuthContext.tsx";
+import { OrganizationProvider } from "./contexts/organization/OrganizationProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <OrganizationProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </OrganizationProvider>
       </AuthProvider>
     </ThemeProvider>
   </StrictMode>
