@@ -1,12 +1,4 @@
 import { createContext } from "react";
-import type { AnalysisProviderType } from "./types";
+import type { AnalysisContextType } from "./types";
 
-export const AnalysisContext = createContext({
-  // state: Analysis,
-});
-
-export const AnalysisProvider = ({ children }: AnalysisProviderType) => {
-  return (
-    <AnalysisContext.Provider value={{}}>{children}</AnalysisContext.Provider>
-  );
-};
+export const AnalysisContext = createContext<AnalysisContextType | null>(null);

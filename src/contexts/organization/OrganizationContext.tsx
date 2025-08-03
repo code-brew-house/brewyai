@@ -1,10 +1,5 @@
 import { createContext } from "react";
-import type { GetCurrentOrganizationRequestData, OrgState } from "./types";
+import type { OrganizationContextType } from "./types";
 
-export const OrganizationContext = createContext<{
-  state: OrgState;
-  getCurrentOrganization: (
-    data: GetCurrentOrganizationRequestData
-  ) => Promise<void>;
-  getOrganizations: () => Promise<void>;
-} | null>(null);
+export const OrganizationContext =
+  createContext<OrganizationContextType | null>(null);

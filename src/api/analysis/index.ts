@@ -1,17 +1,17 @@
 import axios from "axios";
-import type { AudioAnalysisResponse } from "./types";
+import type {
+  AnalysisResult,
+  AudioAnalysisRequest,
+  AudioAnalysisResponse,
+  JobStatusType,
+} from "./types";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const analysisApi = axios.create({
   baseURL: API_URL,
   headers: {
-    "Content-Type": "application/json",
-    // "Access-Control-Allow-Origin": "*",
-    // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    // "Access-Control-Allow-Credentials": "true",
-    // "Access-Control-Allow-Headers": "",
-    // "Access-Control-Expose-Headers": "*",
+    "Content-Type": "multipart/form-data",
   },
 });
 
@@ -24,9 +24,12 @@ analysisApi.interceptors.request.use((config) => {
   return config;
 });
 
-export const audioAnalysis = async (data: AudioAnalysisResponse) => {
+export const audioAnalysis = async (
+  data: AudioAnalysisRequest
+): Promise<AudioAnalysisResponse> => {
   try {
-    const response = await analysisApi.post("", data); // TODO: update
+    const response = await analysisApi.post("/audio-analysis/upload", data); // TODO: update
+    console.log({ audioAnalysis: response });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -34,5 +37,42 @@ export const audioAnalysis = async (data: AudioAnalysisResponse) => {
         error.response?.data?.message || "Failed to upload audio for analysis"
       );
     }
+    throw error;
+  }
+};
+
+export const analysisJobStatus = async (
+  jobId: string
+): Promise<JobStatusType> => {
+  try {
+    const response = await analysisApi.get(`/audio-analysis/jobs/${jobId}`);
+    console.log({ jobStatus: response });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Failed to get analysis job status"
+      );
+    }
+    throw error;
+  }
+};
+
+export const getAnalysisJobResult = async (
+  jobId: string
+): Promise<AnalysisResult> => {
+  try {
+    const response = await analysisApi.get(
+      `/audio-analysis/jobs/${jobId}/results;`
+    );
+    console.log({ jobStatus: response });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Failed to get analysis job result"
+      );
+    }
+    throw error;
   }
 };

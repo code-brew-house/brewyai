@@ -1,6 +1,13 @@
 import type { ReactNode } from "react";
 import type { User } from "../../components/Authentication/types";
 
+export type AuthContextType = {
+  state: AuthState;
+  login: (credentials: LoginCredentials) => Promise<void>;
+  register: (credentials: SignUpCredentials) => Promise<void>;
+  logout: () => Promise<void>;
+};
+
 export type LoginCredentials = {
   identifier: string;
   password: string;

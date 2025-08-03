@@ -7,7 +7,7 @@ import type {
 } from "./types";
 
 // Get the API URL from environment variables
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const authApi = axios.create({
   baseURL: API_URL,
@@ -31,6 +31,12 @@ export const registerSuperOwner = async (
 ): Promise<RegisterSuperOwnerResponse> => {
   try {
     const response = await authApi.post("/auth/register", data);
+
+    // Store token in localStorage if registration is successful
+    if (response.data?.data?.token) {
+      localStorage.setItem("token", response.data.data.token);
+    }
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -48,6 +54,12 @@ export const loginUser = async (
 ): Promise<LoginSuperOwnerResponse> => {
   try {
     const response = await authApi.post("/auth/login", data);
+
+    // Store token in localStorage if login is successful
+    if (response.data?.data?.token) {
+      localStorage.setItem("token", response.data.data.token);
+    }
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -62,6 +74,8 @@ export const loginUser = async (
 export const logoutUser = async (): Promise<void> => {
   try {
     await authApi.post("/auth/logout");
+    // Remove token from localStorage on logout
+    localStorage.removeItem("token");
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(error.response?.data?.message || "Failed to logout");

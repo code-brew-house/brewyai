@@ -1,5 +1,13 @@
 import type { ReactNode } from "react";
 
+export type OrganizationContextType = {
+  state: OrgState;
+  getCurrentOrganization: (
+    data: GetCurrentOrganizationRequestData
+  ) => Promise<void>;
+  getOrganizations: () => Promise<void>;
+};
+
 export type OrganizationProviderProps = {
   children: ReactNode;
 };

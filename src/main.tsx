@@ -10,8 +10,9 @@ import { BrowserRouter } from "react-router";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "./theme.ts";
 import { CssBaseline } from "@mui/material";
-import { AuthProvider } from "./contexts/auth/AuthContext.tsx";
+import { AuthProvider } from "./contexts/auth/AuthProvider.tsx";
 import { OrganizationProvider } from "./contexts/organization/OrganizationProvider.tsx";
+import { AnalysisProvider } from "./contexts/analysis/AnalysisProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -19,9 +20,11 @@ createRoot(document.getElementById("root")!).render(
       <CssBaseline />
       <AuthProvider>
         <OrganizationProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <AnalysisProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </AnalysisProvider>
         </OrganizationProvider>
       </AuthProvider>
     </ThemeProvider>

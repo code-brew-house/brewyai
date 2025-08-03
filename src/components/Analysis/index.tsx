@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import { Section } from "../Section";
 import "./index.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
-import { analyzeAudio } from "../../api/analysis/old";
 import { useAuth } from "../../contexts/auth/useAuth";
+import { useAnalysis } from "../../contexts/analysis/useAnalysis";
 import type { AlertState, AudioFile } from "./types";
 
 const AudioUpload = ({
@@ -231,13 +231,13 @@ const AudioUpload = ({
 
 export const Analysis = () => {
   const [audioFile, setAudioFile] = useState<AudioFile | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [alert, setAlert] = useState<AlertState>({
     open: false,
     message: "",
     severity: "error",
   });
   const auth = useAuth();
+  const analysis = useAnalysis()!;
   const {
     state: { user },
   } = auth!;
@@ -254,16 +254,13 @@ export const Analysis = () => {
     e.preventDefault();
     if (!audioFile || !user) return;
 
-    setIsAnalyzing(true);
     try {
-      const response = await analyzeAudio({
-        file: audioFile.file,
-        // clientId: user.id.toString(),
-        clientId: "clientId1",
-        customPrompt: "dominantTone",
+      await analysis.uploadAudio(audioFile.file);
+      setAlert({
+        open: true,
+        message: "Audio uploaded successfully! Analysis in progress...",
+        severity: "success",
       });
-      console.log("Analysis response:", response);
-      // TODO: Handle the analysis response (e.g., show results, navigate to reports)
     } catch (error) {
       console.error("Error analyzing audio:", error);
       setAlert({
@@ -271,10 +268,60 @@ export const Analysis = () => {
         message: "Failed to analyze audio. Please try again.",
         severity: "error",
       });
-    } finally {
-      setIsAnalyzing(false);
     }
   };
+
+  // Poll for job status when a job is created
+  useEffect(() => {
+    if (
+      analysis.state.jobStatus?.id &&
+      analysis.state.jobStatus.status !== "completed" &&
+      analysis.state.jobStatus.status !== "failed"
+    ) {
+      const pollInterval = setInterval(async () => {
+        try {
+          await analysis.checkAnalysisJobStatus(analysis.state.jobStatus!.id);
+
+          // If job is completed, get the result
+          if (analysis.state.jobStatus?.status === "completed") {
+            await analysis.getAnalysisResult(analysis.state.jobStatus.id);
+            clearInterval(pollInterval);
+            setAlert({
+              open: true,
+              message: "Analysis completed successfully!",
+              severity: "success",
+            });
+          } else if (analysis.state.jobStatus?.status === "failed") {
+            clearInterval(pollInterval);
+            setAlert({
+              open: true,
+              message: "Analysis failed. Please try again.",
+              severity: "error",
+            });
+          }
+        } catch (error) {
+          console.error("Error polling job status:", error);
+          clearInterval(pollInterval);
+        }
+      }, 5000); // Poll every 5 seconds
+
+      return () => clearInterval(pollInterval);
+    }
+  }, [analysis.state.jobStatus?.id, analysis.state.jobStatus?.status]);
+
+  // Show error from context
+  useEffect(() => {
+    if (analysis.state.error) {
+      setAlert({
+        open: true,
+        message:
+          typeof analysis.state.error === "string"
+            ? analysis.state.error
+            : "An error occurred during analysis",
+        severity: "error",
+      });
+    }
+  }, [analysis.state.error]);
 
   return (
     <Section
@@ -304,65 +351,55 @@ export const Analysis = () => {
             <AudioUpload onFileChange={setAudioFile} onAlert={handleAlert} />
           </FormControl>
 
-          {/* <FormControl
-            variant="outlined"
-            sx={{ width: "100%", display: "block", marginBottom: "16px" }}
-          >
-            <InputLabel
-              htmlFor="questionsInput"
-              shrink={false}
-              sx={{
-                position: "static",
-                color: "rgba(0, 0, 0, 0.87)",
-                fontWeight: 500,
-                transform: "none",
-                marginBottom: "8px",
-              }}
-            >
-              Questions
-            </InputLabel>
-            <QuestionInput onQuestionsChange={setQuestions} />
-          </FormControl> */}
-
-          {/* <FormGroup
-            sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              flexDirection: "row",
-              marginTop: "8px",
-            }}
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  size="small"
-                  checked={generateSummary}
-                  onChange={(e) => setGenerateSummary(e.target.checked)}
-                />
-              }
-              label="Generate Summary"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  size="small"
-                  checked={generateTranscript}
-                  onChange={(e) => setGenerateTranscript(e.target.checked)}
-                />
-              }
-              label="Generate Transcript"
-            />
-          </FormGroup> */}
-
           <Button
             variant="contained"
             sx={{ width: "100%" }}
             type="submit"
-            disabled={!audioFile || isAnalyzing}
+            disabled={!audioFile || analysis.state.loading}
           >
-            {isAnalyzing ? "Analyzing..." : "Analyze"}
+            {analysis.state.loading ? "Analyzing..." : "Analyze"}
           </Button>
         </form>
+
+        {/* Display job status */}
+        {analysis.state.jobStatus && (
+          <div
+            style={{
+              marginTop: "16px",
+              padding: "12px",
+              backgroundColor: "#f5f5f5",
+              borderRadius: "4px",
+            }}
+          >
+            <h4>Analysis Status</h4>
+            <p>Status: {analysis.state.jobStatus.status}</p>
+            {analysis.state.jobStatus.status === "processing" && (
+              <CircularProgress size={20} style={{ marginLeft: "8px" }} />
+            )}
+          </div>
+        )}
+
+        {/* Display analysis result */}
+        {analysis.state.analysisResult && (
+          <div
+            style={{
+              marginTop: "16px",
+              padding: "12px",
+              backgroundColor: "#e8f5e8",
+              borderRadius: "4px",
+            }}
+          >
+            <h4>Analysis Result</h4>
+            <p>
+              <strong>Transcript:</strong>{" "}
+              {analysis.state.analysisResult.transcript}
+            </p>
+            <p>
+              <strong>Sentiment:</strong>{" "}
+              {analysis.state.analysisResult.sentiment}
+            </p>
+          </div>
+        )}
       </div>
 
       <Snackbar
