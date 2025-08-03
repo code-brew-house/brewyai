@@ -1,24 +1,20 @@
 # Build stage
 FROM node:20-alpine AS builder
 
-# Install yarn if not already available
-RUN corepack enable && corepack prepare yarn@stable --activate
-
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-COPY yarn.lock ./
+# Copy package file
+COPY package.json ./
 
-# Install dependencies
-RUN yarn install --frozen-lockfile
+# Install dependencies using npm
+RUN npm install
 
 # Copy source code
 COPY . .
 
 # Build the application
-RUN yarn build
+RUN npm run build
 
 # Production stage
 FROM nginx:alpine
