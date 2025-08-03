@@ -19,15 +19,16 @@ export const SignUp = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
+  const auth = useAuth();
   const {
-    signup,
+    register,
     state: { loading, error },
-  } = useAuth();
+  } = auth!;
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signup({ email, password, username, fullName: name });
+    await register({ email, password, username, fullName: name });
   };
 
   return (

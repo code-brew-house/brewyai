@@ -30,13 +30,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const response = await loginUser(credentials);
       console.log({ response });
 
-      setState((curr) => ({
-        ...curr,
-        user: response.data,
-        loading: false,
-        error: null,
-      }));
-    } catch (error) {
+      if (response?.data && response?.data?.user) {
+        setState((curr) => ({
+          ...curr,
+          user: response?.data.user,
+          loading: false,
+          error: null,
+        }));
+      }
+    } catch (error: any) {
       console.error("Error Logging In", error);
       setState((curr) => ({ ...curr, loading: false, error: error }));
     }
@@ -53,9 +55,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         ...curr,
         loading: false,
         error: null,
-        user: response.data,
+        user: response.data.user,
       }));
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error Registering", error);
       setState((curr) => ({ ...curr, loading: false, error: error }));
     }
@@ -70,7 +72,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         error: null,
         user: null,
       }));
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error Logging Out", error);
       setState((curr) => ({ ...curr, loading: false, error: error }));
     }

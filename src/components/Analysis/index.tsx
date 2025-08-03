@@ -249,9 +249,10 @@ export const Analysis = () => {
     message: "",
     severity: "error",
   });
+  const auth = useAuth();
   const {
     state: { user },
-  } = useAuth();
+  } = auth!;
 
   const handleAlert = (newAlert: AlertState) => {
     setAlert(newAlert);

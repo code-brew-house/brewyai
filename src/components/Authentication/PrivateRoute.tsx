@@ -11,9 +11,10 @@ export const PrivateRoute = ({
   element,
   redirectTo = "/dashboard",
 }: PrivateRouteProps) => {
+  const auth = useAuth();
   const {
     state: { user },
-  } = useAuth();
+  } = auth!;
 
   // If user is logged in and trying to access auth pages, redirect to dashboard
   if (user) {

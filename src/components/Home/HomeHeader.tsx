@@ -7,10 +7,11 @@ import { useAuth } from "../../contexts/auth/useAuth";
 
 export const Header = () => {
   const navigate = useNavigate();
+  const auth = useAuth();
   const {
     state: { user },
     logout,
-  } = useAuth();
+  } = auth!;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 

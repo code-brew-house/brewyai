@@ -20,19 +20,12 @@ export const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const auth = useAuth();
   const {
     login,
-    clearError,
     state: { loading, error, user },
-  } = useAuth();
+  } = auth!;
   const navigate = useNavigate();
-
-  // Clear error when unmounting
-  useEffect(() => {
-    return () => {
-      clearError();
-    };
-  }, [clearError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     console.log("here");

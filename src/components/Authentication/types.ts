@@ -1,15 +1,8 @@
-interface Authority {
-  authority: string;
-}
-
 export interface User {
-  id: number;
+  id: string;
   username: string;
-  password: string;
   email: string;
-  enabled: boolean;
-  credentialsNonExpired: boolean;
-  accountNonExpired: boolean;
-  accountNonLocked: boolean;
-  authorities: Authority[];
+  fullName: string;
+  organizationId: string;
+  role: string;
 }

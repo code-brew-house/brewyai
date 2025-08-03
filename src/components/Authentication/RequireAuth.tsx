@@ -8,9 +8,10 @@ interface RequireAuthProps {
 }
 
 export const RequireAuth = ({ element }: RequireAuthProps) => {
+  const auth = useAuth();
   const {
     state: { user, loading },
-  } = useAuth();
+  } = auth!;
   const location = useLocation();
 
   // Show loading spinner while checking authentication

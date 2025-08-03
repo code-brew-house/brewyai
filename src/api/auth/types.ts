@@ -39,5 +39,12 @@ export type LoginSuperOwnerRequest = {
 };
 
 export type LoginSuperOwnerResponse = {
-  token: string;
+  message: string;
+  success: boolean;
+  data: {
+    token: string;
+    tokenType: string;
+    expiresIn: number;
+    user: UserDTO;
+  };
 };

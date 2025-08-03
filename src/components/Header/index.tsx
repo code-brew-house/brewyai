@@ -5,10 +5,11 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/auth/useAuth";
 
 export const Header = () => {
+  const auth = useAuth();
   const {
     state: { user },
     logout,
-  } = useAuth();
+  } = auth!;
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

@@ -5,7 +5,8 @@ import { useAuth } from "../../contexts/auth/useAuth";
 
 export const Logout = () => {
   const [error, setError] = useState<string | null>(null);
-  const { logout } = useAuth();
+  const auth = useAuth();
+  const { logout } = auth!;
   const navigate = useNavigate();
 
   useEffect(() => {
