@@ -1,13 +1,9 @@
 import {
   Button,
-  // Checkbox,
   FormControl,
-  // FormControlLabel,
-  // FormGroup,
   OutlinedInput,
   CircularProgress,
   IconButton,
-  // Typography,
   InputLabel,
   Alert,
   Snackbar,
@@ -19,7 +15,7 @@ import type { ChangeEvent } from "react";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { analyzeAudio } from "../../api/analysis/old";
-import useAuth from "../../contexts/auth/useAuth";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 interface AudioFile {
   name: string;

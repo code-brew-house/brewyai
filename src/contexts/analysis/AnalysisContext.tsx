@@ -1,16 +1,12 @@
-import { createContext, useContext } from "react";
-import { AnalysisProviderType } from "./types";
+import { createContext } from "react";
+import type { AnalysisProviderType } from "./types";
 
-const AnalysisContext = createContext({
+export const AnalysisContext = createContext({
   // state: Analysis,
 });
 
-export const AnalysisProvider = ({ children }: AnalysisProviderType) => {};
-
-export const useAnalysis = () => {
-  const context = useContext(AnalysisContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
+export const AnalysisProvider = ({ children }: AnalysisProviderType) => {
+  return (
+    <AnalysisContext.Provider value={{}}>{children}</AnalysisContext.Provider>
+  );
 };

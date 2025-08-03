@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import useAuth from "../../contexts/auth/useAuth";
 import { useNavigate } from "react-router";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 export const Logout = () => {
   const [error, setError] = useState<string | null>(null);

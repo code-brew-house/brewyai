@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
-import { useState, useEffect } from "react";
-import useAuth from "../../contexts/auth/useAuth";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -21,17 +21,9 @@ export const SignUp = () => {
   const [username, setUsername] = useState("");
   const {
     signup,
-    clearError,
     state: { loading, error },
   } = useAuth();
   const navigate = useNavigate();
-
-  // Clear error when unmounting
-  useEffect(() => {
-    return () => {
-      clearError();
-    };
-  }, [clearError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,6 +1,6 @@
 import { type ReactElement } from "react";
 import { Navigate } from "react-router";
-import useAuth from "../../contexts/auth/useAuth";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 interface PrivateRouteProps {
   element: ReactElement;

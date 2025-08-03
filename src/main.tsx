@@ -10,7 +10,7 @@ import { BrowserRouter } from "react-router";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "./theme.ts";
 import { CssBaseline } from "@mui/material";
-import AuthProvider from "./contexts/auth/AuthProvider.tsx";
+import { AuthProvider } from "./contexts/auth/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

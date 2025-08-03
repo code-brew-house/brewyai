@@ -1,8 +1,8 @@
 import "./index.css";
 import { Avatar, Menu, MenuItem } from "@mui/material";
-import useAuth from "../../contexts/auth/useAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 export const Header = () => {
   const {

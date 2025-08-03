@@ -2,8 +2,8 @@ import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import "./homeHeaderStyles.css";
 import { useNavigate } from "react-router";
 import brewyAiLogo from "/src/assets/brewy-ai-text-logo.png";
-import useAuth from "../../contexts/auth/useAuth";
 import { useState } from "react";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 export const Header = () => {
   const navigate = useNavigate();
