@@ -1,6 +1,9 @@
 # Build stage
 FROM node:20-alpine AS builder
 
+# Install yarn if not already available
+RUN corepack enable && corepack prepare yarn@stable --activate
+
 # Set working directory
 WORKDIR /app
 
