@@ -28,12 +28,9 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log("here");
     e.preventDefault();
-    console.log("Attempting login with:", { identifier });
     try {
       await login({ identifier, password });
-      console.log("Login API call completed");
     } catch (err) {
       console.error("Login error:", err);
     }
@@ -41,14 +38,7 @@ export const Login = () => {
 
   // Handle navigation after successful login
   useEffect(() => {
-    console.log("Auth state changed:", { loading, error: !!error, user });
     if (!loading && !error && !!user) {
-      console.log("Navigation conditions met:", {
-        loading: !loading,
-        noError: !error,
-        hasUser: !!user,
-        userData: user,
-      });
       navigate("/analysis", { replace: true });
     }
   }, [loading, error, user, navigate]);

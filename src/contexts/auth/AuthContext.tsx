@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setState((curr) => ({ ...curr, loading: true, error: null }));
 
       const response = await loginUser(credentials);
-      console.log({ response });
 
       if (response?.data && response?.data?.user) {
         setState((curr) => ({
@@ -49,7 +48,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setState((curr) => ({ ...curr, loading: true, error: null }));
 
       const response = await registerSuperOwner(credentials);
-      console.log({ response });
 
       setState((curr) => ({
         ...curr,

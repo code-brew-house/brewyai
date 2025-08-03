@@ -16,19 +16,7 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { analyzeAudio } from "../../api/analysis/old";
 import { useAuth } from "../../contexts/auth/useAuth";
-
-interface AudioFile {
-  name: string;
-  size: number;
-  file: File;
-  url: string;
-}
-
-interface AlertState {
-  open: boolean;
-  message: string;
-  severity: "error" | "warning" | "info" | "success";
-}
+import type { AlertState, AudioFile } from "./types";
 
 const AudioUpload = ({
   onFileChange,
