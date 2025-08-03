@@ -3,8 +3,8 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Install yarn globally
-RUN npm install -g yarn
+# Enable yarn via corepack
+RUN corepack enable
 
 # Copy package files
 COPY package.json yarn.lock ./
