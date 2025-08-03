@@ -3,10 +3,13 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Install yarn globally
+RUN npm install -g yarn
+
 # Copy package files
 COPY package.json yarn.lock ./
 
-# Install only production dependencies
+# Install dependencies using yarn
 RUN yarn install --frozen-lockfile --production=false && \
     yarn cache clean
 
@@ -15,9 +18,12 @@ COPY src/ ./src/
 COPY public/ ./public/
 COPY index.html tsconfig*.json vite.config.ts ./
 
+# Declare build argument
+ARG VITE_API_URL=/api
+
 # Set production environment
 ENV NODE_ENV=production
-ENV VITE_API_URL=${VITE_API_URL:-/api}
+ENV VITE_API_URL=${VITE_API_URL}
 
 # Build application
 RUN yarn build && \
