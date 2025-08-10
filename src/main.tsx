@@ -10,16 +10,22 @@ import { BrowserRouter } from "react-router";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "./theme.ts";
 import { CssBaseline } from "@mui/material";
-import AuthProvider from "./contexts/auth/AuthProvider.tsx";
+import { AuthProvider } from "./contexts/auth/AuthProvider.tsx";
+import { OrganizationProvider } from "./contexts/organization/OrganizationProvider.tsx";
+import { AnalysisProvider } from "./contexts/analysis/AnalysisProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <OrganizationProvider>
+          <AnalysisProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </AnalysisProvider>
+        </OrganizationProvider>
       </AuthProvider>
     </ThemeProvider>
   </StrictMode>

@@ -13,33 +13,27 @@ import {
 import { deepPurple } from "@mui/material/colors";
 import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
 import { useState, useEffect } from "react";
-import useAuth from "../../contexts/auth/useAuth";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/auth/useAuth";
+import { useOrganization } from "../../contexts/organization/useOrganization";
 
 export const Login = () => {
-  const [username, setUsername] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const auth = useAuth();
   const {
     login,
-    clearError,
     state: { loading, error, user },
-  } = useAuth();
+  } = auth!;
   const navigate = useNavigate();
-
-  // Clear error when unmounting
-  useEffect(() => {
-    return () => {
-      clearError();
-    };
-  }, [clearError]);
+  const org = useOrganization();
+  const { getCurrentOrganization } = org!;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Attempting login with:", { username });
     try {
-      await login({ username, password });
-      console.log("Login API call completed");
+      await login({ identifier, password });
     } catch (err) {
       console.error("Login error:", err);
     }
@@ -47,17 +41,16 @@ export const Login = () => {
 
   // Handle navigation after successful login
   useEffect(() => {
-    console.log("Auth state changed:", { loading, error: !!error, user });
+    // const getUserOrganizationDetails = async () => {
+    //   if (user)
+    //     await getCurrentOrganization({ organizationId: user.organizationId });
+    // };
+
     if (!loading && !error && !!user) {
-      console.log("Navigation conditions met:", {
-        loading: !loading,
-        noError: !error,
-        hasUser: !!user,
-        userData: user,
-      });
+      // if (user && user.organizationId) getUserOrganizationDetails();
       navigate("/analysis", { replace: true });
     }
-  }, [loading, error, user, navigate]);
+  }, [loading, error, user, navigate, getCurrentOrganization]);
 
   return (
     <Box
@@ -141,8 +134,8 @@ export const Login = () => {
                 fullWidth
                 type="text"
                 placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
                 sx={{ mb: 2 }}
                 required
               />
@@ -191,12 +184,14 @@ export const Login = () => {
               </Button>
             </form>
 
-            <Typography variant="body2" align="center">
+            {/* <Typography variant="body2" align="center">
               Don't have an account?{" "}
               <Link href="/signup" underline="hover">
                 Create an account
               </Link>
-            </Typography>
+            </Typography> */}
+
+            <Box height={50}></Box>
           </Container>
         </Box>
 
@@ -207,7 +202,17 @@ export const Login = () => {
             height: "100%",
             bgcolor: deepPurple[500],
           }}
-        />
+        >
+          {/* <Box
+            sx={{
+              width: "75%",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              opacity: "0.5",
+              zIndex: 1,
+            }}
+          ></Box> */}
+        </Box>
       </Box>
     </Box>
   );

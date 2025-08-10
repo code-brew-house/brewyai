@@ -1,43 +1,8 @@
-interface Authority {
-  authority: string;
-}
-
 export interface User {
-  id: number;
+  id: string;
   username: string;
-  password: string;
   email: string;
-  enabled: boolean;
-  credentialsNonExpired: boolean;
-  accountNonExpired: boolean;
-  accountNonLocked: boolean;
-  authorities: Authority[];
-}
-
-export interface AuthState {
-  user: User | null;
-  loading: boolean;
-  error: string | null;
-}
-
-export type AuthAction =
-  | { type: "LOGIN_START" }
-  | { type: "AUTH_TOKEN_RECEIVED" }
-  | { type: "USER_LOADED"; payload: User }
-  | { type: "LOGIN_ERROR"; payload: string }
-  | { type: "SIGNUP_START" }
-  | { type: "SIGNUP_ERROR"; payload: string }
-  | { type: "LOGOUT" }
-  | { type: "CLEAR_ERROR" };
-
-export interface LoginCredentials {
-  username: string;
-  password: string;
-}
-
-export interface SignUpCredentials {
-  email: string;
-  username: string;
-  password: string;
-  name: string;
+  fullName: string;
+  organizationId: string;
+  role: string;
 }

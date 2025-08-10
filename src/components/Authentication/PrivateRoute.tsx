@@ -1,6 +1,6 @@
 import { type ReactElement } from "react";
 import { Navigate } from "react-router";
-import useAuth from "../../contexts/auth/useAuth";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 interface PrivateRouteProps {
   element: ReactElement;
@@ -11,9 +11,10 @@ export const PrivateRoute = ({
   element,
   redirectTo = "/dashboard",
 }: PrivateRouteProps) => {
+  const auth = useAuth();
   const {
     state: { user },
-  } = useAuth();
+  } = auth!;
 
   // If user is logged in and trying to access auth pages, redirect to dashboard
   if (user) {
