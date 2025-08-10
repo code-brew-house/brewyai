@@ -1,150 +1,78 @@
-import { useReducer, useCallback } from "react";
-import type { ReactNode } from "react";
+import { useState } from "react";
 import type {
+  AuthProviderProps,
   AuthState,
-  AuthAction,
   LoginCredentials,
   SignUpCredentials,
-} from "../../components/Authentication/types";
-import {
-  login as loginApi,
-  signup as signupApi,
-  getCurrentUser,
-} from "../../api/auth";
+} from "./types";
+import { loginUser, logoutUser, registerSuperOwner } from "../../api/auth";
 import { AuthContext } from "./AuthContext";
 
-// Initial state
 const initialState: AuthState = {
   user: null,
   loading: false,
   error: null,
 };
 
-function authReducer(state: AuthState, action: AuthAction): AuthState {
-  switch (action.type) {
-    case "LOGIN_START":
-    case "SIGNUP_START":
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    case "AUTH_TOKEN_RECEIVED":
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    case "USER_LOADED":
-      return {
-        ...state,
-        user: action.payload,
-        loading: false,
-        error: null,
-      };
-    case "LOGIN_ERROR":
-    case "SIGNUP_ERROR":
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-    case "LOGOUT":
-      return {
-        ...state,
-        user: null,
-        error: null,
-      };
-    case "CLEAR_ERROR":
-      return {
-        ...state,
-        error: null,
-      };
-    default:
-      return state;
-  }
-}
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [state, setState] = useState<AuthState>(initialState);
 
-// Auth Provider component
-function AuthProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(authReducer, initialState);
-
-  console.log({ user: state.user });
-
-  // Function to fetch user data
-  const fetchUserData = useCallback(async (token: string) => {
+  const login = async (credentials: LoginCredentials) => {
     try {
-      const userData = await getCurrentUser(token);
-      dispatch({ type: "USER_LOADED", payload: userData });
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      dispatch({
-        type: "LOGIN_ERROR",
-        payload: "Failed to load user data",
-      });
-    }
-  }, []);
+      setState((curr) => ({ ...curr, loading: true, error: null }));
 
-  const login = useCallback(
-    async (credentials: LoginCredentials) => {
-      try {
-        console.log("Starting login process...");
-        dispatch({ type: "LOGIN_START" });
-        const response = await loginApi(credentials);
-        console.log("Login API response:", response);
+      const response = await loginUser(credentials);
 
-        // After receiving the token, fetch user data
-        dispatch({ type: "AUTH_TOKEN_RECEIVED" });
-        await fetchUserData(response.token);
-      } catch (error) {
-        console.error("Login error:", error);
-        dispatch({
-          type: "LOGIN_ERROR",
-          payload:
-            error instanceof Error
-              ? error.message
-              : "An error occurred during login",
-        });
+      if (response?.data && response?.data?.user) {
+        setState((curr) => ({
+          ...curr,
+          user: response?.data.user,
+          loading: false,
+          error: null,
+        }));
       }
-    },
-    [fetchUserData]
-  );
-
-  const signup = useCallback(async (credentials: SignUpCredentials) => {
-    try {
-      dispatch({ type: "SIGNUP_START" });
-      await signupApi(credentials);
-      // Don't fetch user data after signup since we don't get a token
-      dispatch({ type: "LOGOUT" });
-    } catch (error) {
-      dispatch({
-        type: "SIGNUP_ERROR",
-        payload:
-          error instanceof Error
-            ? error.message
-            : "An error occurred during signup",
-      });
+    } catch (error: any) {
+      console.error("Error Logging In", error);
+      setState((curr) => ({ ...curr, loading: false, error: error }));
     }
-  }, []);
-
-  const logout = useCallback(async () => {
-    localStorage.removeItem("token");
-    dispatch({ type: "LOGOUT" });
-  }, []);
-
-  const clearError = useCallback(() => {
-    dispatch({ type: "CLEAR_ERROR" });
-  }, []);
-
-  const value = {
-    state,
-    login,
-    signup,
-    logout,
-    clearError,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
+  const register = async (credentials: SignUpCredentials) => {
+    try {
+      setState((curr) => ({ ...curr, loading: true, error: null }));
 
-export default AuthProvider;
+      const response = await registerSuperOwner(credentials);
+
+      setState((curr) => ({
+        ...curr,
+        loading: false,
+        error: null,
+        user: response.data.user,
+      }));
+    } catch (error: any) {
+      console.error("Error Registering", error);
+      setState((curr) => ({ ...curr, loading: false, error: error }));
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await logoutUser();
+      setState((curr) => ({
+        ...curr,
+        loading: false,
+        error: null,
+        user: null,
+      }));
+    } catch (error: any) {
+      console.error("Error Logging Out", error);
+      setState((curr) => ({ ...curr, loading: false, error: error }));
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ state, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

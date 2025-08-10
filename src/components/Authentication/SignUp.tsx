@@ -10,32 +10,25 @@ import {
 } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
-import { useState, useEffect } from "react";
-import useAuth from "../../contexts/auth/useAuth";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
+  const auth = useAuth();
   const {
-    signup,
-    clearError,
+    register,
     state: { loading, error },
-  } = useAuth();
+  } = auth!;
   const navigate = useNavigate();
-
-  // Clear error when unmounting
-  useEffect(() => {
-    return () => {
-      clearError();
-    };
-  }, [clearError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signup({ email, password, username, name });
+    await register({ email, password, username, fullName: name });
   };
 
   return (

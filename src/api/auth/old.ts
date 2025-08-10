@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Get the API URL from environment variables
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8082/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface Authority {
   authority: string;
@@ -91,9 +91,7 @@ export const signup = async (data: SignupData): Promise<AuthResponse> => {
 // Login API wrapper
 export const login = async (data: LoginData): Promise<AuthResponse> => {
   try {
-    console.log("Making login API request with:", { username: data.username });
     const response = await authApi.post<AuthResponse>("/auth/login", data);
-    console.log("Raw API response:", response.data);
     localStorage.setItem("token", response.data.token);
     return response.data;
   } catch (error) {

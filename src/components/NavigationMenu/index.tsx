@@ -28,10 +28,10 @@ const LogoContainer = styled(Box)({
   height: "70px",
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "flex-start",
   overflow: "hidden",
   "& img": {
-    maxWidth: "100%",
+    maxWidth: "75%",
     height: "auto",
   },
 });
