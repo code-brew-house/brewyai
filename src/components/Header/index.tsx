@@ -1,8 +1,9 @@
 import "./index.css";
-import { Avatar, Menu, MenuItem } from "@mui/material";
+import { Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/auth/useAuth";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export const Header = () => {
   const auth = useAuth();
@@ -30,8 +31,8 @@ export const Header = () => {
 
   // Get user initials
   const getInitials = () => {
-    if (user?.username) {
-      return user.username
+    if (user?.fullName) {
+      return user.fullName
         .split(" ")
         .map((n) => n[0])
         .join("")
@@ -39,23 +40,23 @@ export const Header = () => {
     }
     return user?.email
       ? user.email.split("@")[0].slice(0, 2).toUpperCase()
-      : "U";
+      : "You";
   };
 
   return (
     <header className="header">
       <div className="header-left">Organization Name</div>
       <div className="header-right">
-        <Avatar
-          className="user-avatar"
+        <div
+          className="user-avatar-container"
           onClick={handleClick}
           aria-controls={open ? "basic-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
-          sx={{ cursor: "pointer" }}
         >
-          {getInitials()}
-        </Avatar>
+          <div className="user-avatar">{getInitials()}</div>
+          <KeyboardArrowDownIcon className="avatar-chevron" />
+        </div>
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}

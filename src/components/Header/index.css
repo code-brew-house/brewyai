@@ -9,7 +9,7 @@
 }
 
 .header-left {
-
+    font-weight: bold;
 }
 
 .header-right {
@@ -17,14 +17,38 @@
     align-items: center;
 }
 
-.user-avatar {
-    background-color: #673ab7 !important;
+.user-avatar-container {
+    display: flex;
+    align-items: center;
+    background-color: #673ab7;
+    opacity: 0.8;
+    border-radius: 20px;
+    padding: 8px 12px;
     cursor: pointer;
     transition: transform 0.2s ease;
+    gap: 8px;
 }
 
-.user-avatar:hover {
+.user-avatar-container:hover {
     transform: scale(1.05);
+}
+
+.user-avatar {
+    background-color: #673ab7;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.avatar-chevron {
+    color: white;
+    font-size: 20px;
 }
 
 .header h1 {
