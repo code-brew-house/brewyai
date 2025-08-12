@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  OrgState,
+  type OrgState,
   type GetCurrentOrganizationRequestData,
   type OrganizationProviderProps,
 } from "./types";
