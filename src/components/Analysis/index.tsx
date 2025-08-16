@@ -236,6 +236,7 @@ export const Analysis = () => {
     message: "",
     severity: "error",
   });
+  const currentJobRef = useRef<string | null>(null);
   const auth = useAuth();
   const analysis = useAnalysis()!;
   const {
@@ -273,41 +274,87 @@ export const Analysis = () => {
 
   // Poll for job status when a job is created
   useEffect(() => {
-    if (
-      analysis.state.jobStatus?.id &&
-      analysis.state.jobStatus.status !== "completed" &&
-      analysis.state.jobStatus.status !== "failed"
-    ) {
-      const pollInterval = setInterval(async () => {
-        try {
-          await analysis.checkAnalysisJobStatus(analysis.state.jobStatus!.id);
+    const jobId = analysis.state.jobStatus?.jobId;
+    const currentStatus = analysis.state.jobStatus?.status;
 
-          // If job is completed, get the result
-          if (analysis.state.jobStatus?.status === "completed") {
-            await analysis.getAnalysisResult(analysis.state.jobStatus.id);
+    // Only start polling if we have a new job that's not the current one
+    if (
+      jobId &&
+      currentStatus !== "completed" &&
+      currentStatus !== "failed" &&
+      jobId !== currentJobRef.current
+    ) {
+      currentJobRef.current = jobId;
+      console.log(
+        "Starting polling for job:"
+        // jobId,
+        // "with status:",
+        // currentStatus
+      );
+
+      let isPolling = true;
+      const pollInterval = setInterval(async () => {
+        if (!isPolling) return;
+
+        try {
+          console.log("Polling job status for job:");
+          // Call the API function to get the latest status
+          const jobStatus = await analysis.checkAnalysisJobStatus(jobId);
+
+          console.log("Job status response:", jobStatus);
+
+          if (jobStatus.status === "completed") {
+            console.log("Job completed, getting result for job:");
+            isPolling = false;
             clearInterval(pollInterval);
+
+            try {
+              await analysis.getAnalysisResult(jobId);
+              console.log("Successfully got analysis result for job:");
+            } catch (resultError) {
+              console.error("Error getting analysis result:", resultError);
+            }
+
             setAlert({
               open: true,
               message: "Analysis completed successfully!",
               severity: "success",
             });
-          } else if (analysis.state.jobStatus?.status === "failed") {
+          } else if (jobStatus.status === "failed") {
+            console.log(
+              "Job failed for job:"
+              // , jobId
+            );
+            isPolling = false;
             clearInterval(pollInterval);
             setAlert({
               open: true,
               message: "Analysis failed. Please try again.",
               severity: "error",
             });
+          } else {
+            console.log(
+              "Job still processing, status:"
+              // jobStatus.status,
+              // "for job:",
+              // jobId
+            );
           }
         } catch (error) {
-          console.error("Error polling job status:", error);
+          console.error("Error polling job status for job:", jobId, error);
+          isPolling = false;
           clearInterval(pollInterval);
         }
-      }, 5000); // Poll every 5 seconds
+      }, 5000);
 
-      return () => clearInterval(pollInterval);
+      return () => {
+        if (isPolling) {
+          isPolling = false;
+          clearInterval(pollInterval);
+        }
+      };
     }
-  }, [analysis.state.jobStatus?.id, analysis.state.jobStatus?.status]);
+  }, [analysis.state.jobStatus?.jobId]); // Only depend on jobId, not status
 
   // Show error from context
   useEffect(() => {

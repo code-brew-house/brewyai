@@ -28,7 +28,6 @@ export const OrganizationProvider = ({
     try {
       setState((curr) => ({ ...curr, loading: true }));
       const response = await getOrganizationById(data);
-      console.log({ response });
 
       setState((curr) => ({
         ...curr,
@@ -46,7 +45,6 @@ export const OrganizationProvider = ({
     try {
       setState((curr) => ({ ...curr, loading: true }));
       const response = await getAllOrganizations();
-      console.log({ response });
 
       setState((curr) => ({
         ...curr,
