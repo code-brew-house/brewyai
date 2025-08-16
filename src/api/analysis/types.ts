@@ -3,9 +3,20 @@ export type AnalysisResult = {
   jobId: string;
   transcript: string;
   sentiment: string;
-  metadata?: string; // TODO: update
+  metadata?: AnalysisResultMetadata | null;
   createdAt: Date;
   job: AnalysisJobDto;
+};
+
+type AnalysisResultMetadata = {
+  audioLength: number;
+  clientType: string;
+  confidenceScore: number;
+  customerSatisfied: boolean;
+  issueResolved: boolean;
+  processingCompletedAt: string;
+  professionalInteraction: boolean;
+  transcriptId: string;
 };
 
 type AnalysisJobDto = {
@@ -24,7 +35,7 @@ export type AudioAnalysisRequest = {
 };
 
 export type JobStatusType = {
-  id: string;
+  jobId: string;
   status: "pending" | "processing" | "completed" | "failed";
   createdAt: Date;
   updatedAt: Date;
