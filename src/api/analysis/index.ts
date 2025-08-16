@@ -28,8 +28,7 @@ export const audioAnalysis = async (
   data: AudioAnalysisRequest
 ): Promise<AudioAnalysisResponse> => {
   try {
-    const response = await analysisApi.post("/audio-analysis/upload", data); // TODO: update
-    console.log({ audioAnalysis: response });
+    const response = await analysisApi.post("/audio-analysis/upload", data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -46,7 +45,6 @@ export const analysisJobStatus = async (
 ): Promise<JobStatusType> => {
   try {
     const response = await analysisApi.get(`/audio-analysis/jobs/${jobId}`);
-    console.log({ jobStatus: response });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -63,9 +61,8 @@ export const getAnalysisJobResult = async (
 ): Promise<AnalysisResult> => {
   try {
     const response = await analysisApi.get(
-      `/audio-analysis/jobs/${jobId}/results;`
+      `/audio-analysis/jobs/${jobId}/results`
     );
-    console.log({ jobStatus: response });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

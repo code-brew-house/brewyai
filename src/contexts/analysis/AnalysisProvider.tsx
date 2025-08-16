@@ -21,16 +21,15 @@ export const AnalysisProvider = ({ children }: AnalysisProviderType) => {
     try {
       setState((curr) => ({ ...curr, loading: true }));
       const response = await audioAnalysis({ file });
-      console.log({ uploadAudioContext: response });
 
       setState((curr) => ({
         ...curr,
         loading: false,
         jobStatus: response,
       }));
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error uploading audio", error);
-      setState((curr) => ({ ...curr, loading: false, error: error }));
+      setState((curr) => ({ ...curr, loading: false, error: String(error) }));
     }
   };
 
@@ -38,16 +37,18 @@ export const AnalysisProvider = ({ children }: AnalysisProviderType) => {
     try {
       setState((curr) => ({ ...curr, loading: true }));
       const response = await analysisJobStatus(jobId);
-      console.log({ checkAnalysisJobStatusContext: response });
 
       setState((curr) => ({
         ...curr,
         loading: false,
         jobStatus: response,
       }));
-    } catch (error: any) {
+
+      return response;
+    } catch (error: unknown) {
       console.error("Error checking analysis job status", error);
-      setState((curr) => ({ ...curr, loading: false, error: error }));
+      setState((curr) => ({ ...curr, loading: false, error: String(error) }));
+      throw error;
     }
   };
 
@@ -55,16 +56,15 @@ export const AnalysisProvider = ({ children }: AnalysisProviderType) => {
     try {
       setState((curr) => ({ ...curr, loading: true }));
       const response = await getAnalysisJobResult(jobId);
-      console.log({ analysisResultContext: response });
 
       setState((curr) => ({
         ...curr,
         loading: false,
         analysisResult: response,
       }));
-    } catch (error: any) {
-      console.error("Error Logging In", error);
-      setState((curr) => ({ ...curr, loading: false, error: error }));
+    } catch (error: unknown) {
+      console.error("Error getting analysis result", error);
+      setState((curr) => ({ ...curr, loading: false, error: String(error) }));
     }
   };
 

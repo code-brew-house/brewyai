@@ -11,8 +11,8 @@ export type AnalysisState = {
 export type AnalysisContextType = {
   state: AnalysisState;
   uploadAudio: (file: File) => Promise<void>;
-  checkAnalysisJobStatus: (jobId: string) => void;
-  getAnalysisResult: (jobId: string) => void;
+  checkAnalysisJobStatus: (jobId: string) => Promise<JobStatusType>;
+  getAnalysisResult: (jobId: string) => Promise<void>;
 };
 
 export type AnalysisProviderType = {
