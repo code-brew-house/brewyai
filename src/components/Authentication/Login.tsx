@@ -9,8 +9,11 @@ import {
   TextField,
   Typography,
   Alert,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import brewyAiLogo from "../../assets/brewy-ai-text-logo.png";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
@@ -21,6 +24,7 @@ export const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const auth = useAuth();
   const {
     login,
@@ -142,12 +146,26 @@ export const Login = () => {
 
               <TextField
                 fullWidth
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 sx={{ mb: 2 }}
                 required
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        onMouseDown={(e) => e.preventDefault()}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <Box
