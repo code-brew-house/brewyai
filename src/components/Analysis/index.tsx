@@ -345,7 +345,7 @@ export const Analysis = () => {
           isPolling = false;
           clearInterval(pollInterval);
         }
-      }, 5000);
+      }, 500);
 
       return () => {
         if (isPolling) {
